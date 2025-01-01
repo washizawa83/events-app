@@ -2,7 +2,7 @@
 
 import { getMonthDays } from '@/app/utils/calendar/days-util'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 type Props = {
@@ -12,10 +12,11 @@ type Props = {
 const dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export const Calendar = ({ handleSelectedDay }: Props) => {
-  const [selectedDay, setSelectedDay] = useState<dayjs.Dayjs | null>(null)
-  const [selectedMonth, setSelectedMonth] = useState(dayjs())
-  const [monthDays, setMonthDays] = useState(getMonthDays())
   const currentDate = dayjs()
+  const componentRef = useRef<HTMLDivElement | null>(null)
+  const [selectedDay, setSelectedDay] = useState<dayjs.Dayjs>(currentDate)
+  const [selectedMonth, setSelectedMonth] = useState(currentDate)
+  const [monthDays, setMonthDays] = useState(getMonthDays())
 
   const setMonthDelta = (delta: number) => {
     setSelectedMonth((currentSelectedMonth) =>
@@ -41,7 +42,7 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
   }
 
   return (
-    <div className="bg-slate-100">
+    <div className="bg-slate-100" ref={componentRef}>
       <div className="flex items-center justify-center md:h-16 h-12">
         <button
           className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default"
@@ -82,7 +83,6 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
 										justify-center
 										basis-1/7
 										text-center
-										aspect-2/1
 										md:p-0
 										py-2
 										border-r
@@ -90,13 +90,14 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
 										hover:bg-slate-300
 										cursor-default
 										${!isThisMonth(day) && 'bg-slate-200'}
-										${selectedDay === day && 'text-pink-400'}
+										${selectedDay?.format('YYYY/MM/DD') === day.format('YYYY/MM/DD') && 'text-accent'}
+										${componentRef.current?.clientWidth && componentRef.current.clientWidth >= 500 ? 'aspect-3/2' : 'aspect-square'}
 									`}
                   key={index}
                   onClick={() => selectDay(day)}
                 >
                   <p
-                    className={`flex items-center justify-center w-6 h-6 ${isThisDay(day) && 'rounded-full border border-pink-400'}`}
+                    className={`flex items-center justify-center w-6 h-6 md:text-basic text-sm ${isThisDay(day) && 'rounded-full border border-accent'}`}
                   >
                     {day.format('D')}
                   </p>

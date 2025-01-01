@@ -12,12 +12,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        accent: '#f472b6',
       },
       flexBasis: {
         '1/7': '14.2857143%',
       },
       aspectRatio: {
         '2/1': '2 / 1',
+        '3/2': '3 / 2'
       },
     },
   },
