@@ -1,9 +1,5 @@
 'use client'
 
-import { BasePageLayout } from './components/layouts/BasePageLayout'
-import { Calendar } from './features/calendars/Calendar'
-import { EventList } from './features/events/EventList'
-
 const mockEvents = [
   {
     title: '沖縄名産フェア',
@@ -128,18 +124,5 @@ const mockEvents = [
 ]
 
 export default function Home() {
-  return (
-    <BasePageLayout>
-      <div className="md:mb-12">
-        <div className="md:flex md:flex-row-reverse justify-between">
-          <div className="md:w-2/5 md:mb-0 mb-8">
-            <Calendar handleSelectedDay={() => {}} />
-          </div>
-          <div className="md:w-3/3">
-            <EventList events={mockEvents} />
-          </div>
-        </div>
-      </div>
-    </BasePageLayout>
-  )
+  return <main></main>
 }

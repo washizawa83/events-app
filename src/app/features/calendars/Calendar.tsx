@@ -42,7 +42,7 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
   }
 
   return (
-    <div className="bg-slate-100" ref={componentRef}>
+    <div className="bg-slate-100 text-gray-800 rounded-lg" ref={componentRef}>
       <div className="flex items-center justify-center md:h-16 h-12">
         <button
           className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default"

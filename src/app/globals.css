@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #f1f5f9;
-  --foreground: #171717;
+  --background: #525259;
+  --foreground: #f0f0f0;
 }
 
 body {
