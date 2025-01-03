@@ -7,7 +7,7 @@ type Props = {
 export const BasePageLayout = ({ children }: Props) => {
   return (
     <main className="w-screen">
-      <div className="lg:w-3/4 w-11/12 mx-auto">{children}</div>
+      <div className="2xl:w-[1280px] w-full mx-auto">{children}</div>
     </main>
   )
 }
