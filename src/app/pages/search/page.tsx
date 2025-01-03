@@ -36,7 +36,7 @@ const mockEvents = [
     description: '人気YouTuberが一堂に集い配信を行います。',
     address: 'オンライン',
     schedule: '11:00 ~ 17:00',
-    tags: ['配信', 'オンライン', 'YouTube'],
+    tags: ['配信', 'オンライン', 'YouTube', '配信者'],
   },
 ]
 

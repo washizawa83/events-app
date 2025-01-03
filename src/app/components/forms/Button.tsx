@@ -1,7 +1,7 @@
 type Props = {
   label: string
   type?: 'button' | 'submit'
-  color?: 'success' | 'danger'
+  color?: 'success' | 'valiant'
   size?: 's' | 'm' | 'l'
   handleClick: () => void
 }
@@ -14,10 +14,10 @@ const buttonSizeStyle = {
 
 const backgroundColor = {
   success: 'bg-accent',
-  danger: 'bg-valiant',
+  valiant: 'bg-valiant',
 }
 
-export const PrimaryButton = ({
+export const Button = ({
   label,
   type = 'button',
   size = 'm',
@@ -27,7 +27,7 @@ export const PrimaryButton = ({
   return (
     <button
       type={type}
-      className={`bg-baseButton px-2 py-1 rounded-lg outline-none text-white ${buttonSizeStyle[size]} ${backgroundColor[color]} hover:opacity-70 focus:opacity-70`}
+      className={`flex items-center bg-baseButton px-2 py-1 rounded-lg outline-none text-white ${buttonSizeStyle[size]} ${backgroundColor[color]} hover:opacity-70 focus:opacity-70`}
       onClick={handleClick}
     >
       {label}

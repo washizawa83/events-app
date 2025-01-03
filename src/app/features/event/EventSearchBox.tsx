@@ -1,15 +1,18 @@
 'use client'
 
+import { useState } from 'react'
+import { Button } from '../../components/forms/Button'
 import { DateForm } from '../../components/forms/DateForm'
 import { DateTimeForm } from '../../components/forms/DateTimeForm'
 import { LocationForm } from '../../components/forms/LocationForm'
-import { PrimaryButton } from '../../components/forms/PrimaryButton'
 import { SelectButtons } from '../../components/forms/SelectButtons'
 import { TextForm } from '../../components/forms/TextForm'
 
 const eventTypes = ['オフライン', 'オンライン']
 
 export const EventSearchBox = () => {
+  const [isOpenRefineForm, setIsOpenRefineForm] = useState(false)
+
   return (
     <div className="py-4 bg-primary">
       <div className="w-11/12 mx-auto">
@@ -18,12 +21,22 @@ export const EventSearchBox = () => {
             <TextForm label="キーワード" />
           </div>
           <div className="mt-5">
-            <PrimaryButton label="さがす" size="s" handleClick={() => {}} />
+            <Button label="さがす" size="s" handleClick={() => {}} />
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-between lg:flex-row flex-col">
-          <div className="flex items-center lg:w-[48%] w-full mb-5">
-            <div className="mr-5">
+        <div className={`sm:hidden ${isOpenRefineForm && 'mb-5'}`}>
+          <Button
+            label="絞り込む"
+            size="s"
+            color="valiant"
+            handleClick={() => setIsOpenRefineForm(!isOpenRefineForm)}
+          />
+        </div>
+        <div
+          className={`sm:flex flex-wrap items-center justify-between lg:flex-row flex-col ${isOpenRefineForm ? 'flex' : 'hidden'}`}
+        >
+          <div className="sm:flex items-center lg:w-[48%] w-full mb-5">
+            <div className="sm:mb-0 mr-5 mb-5">
               <SelectButtons
                 label="イベントタイプ"
                 buttonLabels={eventTypes}
@@ -34,8 +47,8 @@ export const EventSearchBox = () => {
               <LocationForm label="場所" />
             </div>
           </div>
-          <div className="flex items-center lg:justify-end lg:w-[48%] w-full mb-5">
-            <div className="mr-5">
+          <div className="sm:flex items-center lg:justify-end lg:w-[48%] w-full mb-5">
+            <div className="sm:mb-0 mr-5 mb-5">
               <DateForm label="日程" />
             </div>
             <div className="flex-grow">

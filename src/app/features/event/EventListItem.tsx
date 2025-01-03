@@ -17,7 +17,7 @@ export const EventListItem = ({
   tags,
 }: Props) => {
   return (
-    <li className="flex py-3 mb-3 border-b">
+    <li className="sm:flex py-3 mb-3 border-b block">
       <div className="basis-2/3">
         <h2 className="text-xl mb-2">{title}</h2>
         <p className="text-gray-300 mb-2">{description}</p>
@@ -25,9 +25,9 @@ export const EventListItem = ({
           <span className="mr-3">
             <SlTag />
           </span>
-          <ul className="flex items-center">
+          <ul className="flex items-center flex-wrap">
             {tags?.map((tag) => (
-              <li key={tag} className="mr-2">
+              <li key={tag} className="mr-2 mb-2">
                 <Tip label={tag} />
               </li>
             ))}
