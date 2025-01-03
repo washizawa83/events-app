@@ -22,7 +22,7 @@ export const Footer = () => {
             </div>
           </li>
           <li>
-            <div className="w-7 h-7 rounded-full bg-indigo-500"></div>
+            <div className="w-7 h-7 rounded-full bg-[url('/images/mock-user-icon.jpg')] bg-cover bg-no-repeat"></div>
           </li>
         </ul>
       </div>
