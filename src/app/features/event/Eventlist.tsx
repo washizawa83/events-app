@@ -1,6 +1,6 @@
 import { EventListItem } from './EventListItem'
 
-type Event = {
+export type Event = {
   title: string
   description: string
   address: string

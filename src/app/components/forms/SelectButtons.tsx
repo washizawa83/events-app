@@ -19,7 +19,7 @@ export const SelectButtons = ({ label, buttonLabels, selected }: Props) => {
         {buttonLabels.map((label, index) => (
           <button
             key={index}
-            className={`min-w-24 h-8 px-2 first-of-type:rounded-l-lg last-of-type:rounded-r-lg ${selectedButton === index ? 'bg-valiant border border-accent' : 'bg-secondary'}`}
+            className={`min-w-24 h-8 px-2 first-of-type:rounded-l-lg last-of-type:rounded-r-lg ${selectedButton === index ? 'bg-valiantDark border border-accent' : 'bg-secondary'}`}
             onClick={() => setSelectedButton(index)}
           >
             <span className="text-sm">{label}</span>

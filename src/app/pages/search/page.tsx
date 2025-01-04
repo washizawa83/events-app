@@ -1,5 +1,5 @@
 import { BasePageLayout } from '@/app/components/layouts/BasePageLayout'
-import { EventList } from '@/app/features/event/Eventlist'
+import { EventList } from '@/app/features/event/EventList'
 import { EventSearchBox } from '@/app/features/event/EventSearchBox'
 
 const mockEvents = [
