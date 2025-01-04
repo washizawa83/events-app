@@ -13,7 +13,8 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: '#4A4A59',
-        valiant: '#5E5E6F',
+        valiant: '#727286',
+        valiantDark: '#5E5E6F',
         secondary: '#33333D',
         accent: '#20B980'
       },

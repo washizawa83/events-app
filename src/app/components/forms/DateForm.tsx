@@ -28,7 +28,7 @@ export const DateForm = ({ label }: Props) => {
         />
         <div>
           <button
-            className="rounded-r-lg h-8 p-2 bg-valiant"
+            className="rounded-r-lg h-8 p-2 bg-valiantDark"
             onClick={() => setIsOpenCalendar(!isOpenCalendar)}
           >
             <BsCalendar3 />

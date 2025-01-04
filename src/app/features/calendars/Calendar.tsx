@@ -45,17 +45,17 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
     <div className="bg-slate-100 text-gray-800 rounded-lg" ref={componentRef}>
       <div className="flex items-center justify-center md:h-16 h-12">
         <button
-          className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default"
+          className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default ml-1"
           onClick={() => setMonthDelta(-1)}
         >
           <IoIosArrowBack />
         </button>
-        <div className="w-40 mx-10 text-center">
+        <div className="w-40 mx-auto text-center">
           <span className="mx-2">{selectedMonth.format('YYYY')}</span>
           <span className="mx-2">{selectedMonth.format('MMMM')}</span>
         </div>
         <button
-          className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default"
+          className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default mr-1"
           onClick={() => setMonthDelta(1)}
         >
           <IoIosArrowForward />
@@ -65,7 +65,7 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
         <div className="flex items-center w-full border-b">
           {dayOfWeeks.map((dayOfWeek) => (
             <div className="basis-1/7 text-center" key={dayOfWeek}>
-              <p>{dayOfWeek}</p>
+              <p className="text-sm">{dayOfWeek}</p>
             </div>
           ))}
         </div>

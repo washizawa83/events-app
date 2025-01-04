@@ -27,7 +27,7 @@ export const Button = ({
   return (
     <button
       type={type}
-      className={`flex items-center bg-baseButton px-2 py-1 rounded-lg outline-none text-white ${buttonSizeStyle[size]} ${backgroundColor[color]} hover:opacity-70 focus:opacity-70`}
+      className={`flex items-center justify-center bg-baseButton px-2 py-1 rounded-lg outline-none text-white ${buttonSizeStyle[size]} ${backgroundColor[color]} hover:opacity-70 focus:opacity-70`}
       onClick={handleClick}
     >
       {label}

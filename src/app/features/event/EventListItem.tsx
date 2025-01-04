@@ -17,8 +17,8 @@ export const EventListItem = ({
   tags,
 }: Props) => {
   return (
-    <li className="sm:flex py-3 mb-3 border-b block">
-      <div className="basis-2/3">
+    <li className="sm:flex flex-wrap py-3 mb-3 border-b border-secondary block">
+      <div className="xl:basis-2/3 basis-full">
         <h2 className="text-xl mb-2">{title}</h2>
         <p className="text-gray-300 mb-2">{description}</p>
         <div className="flex items-center">
@@ -34,7 +34,7 @@ export const EventListItem = ({
           </ul>
         </div>
       </div>
-      <div className="basis-1/3">
+      <div className="xl:basis-1/3 basis-full min-w-40">
         <div className="flex items-center h-10">
           <p>場所：{address}</p>
         </div>
