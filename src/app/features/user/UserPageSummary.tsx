@@ -18,6 +18,7 @@ export const UserPageSummary = ({ events }: Props) => {
             label=""
             buttonLabels={['指定日の', '全ての', 'あなたの']}
             selected={0}
+            handleSelected={() => {}}
           />
           <EventList events={events} />
         </div>

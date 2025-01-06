@@ -19,7 +19,7 @@ export const Header = () => {
             <NavigationLink
               icon={<BsCalendar3 />}
               label="カレンダー"
-              href="/"
+              href="/pages/calendar"
             />
           </li>
           <li className="ml-10">

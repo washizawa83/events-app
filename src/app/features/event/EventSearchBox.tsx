@@ -41,6 +41,7 @@ export const EventSearchBox = () => {
                 label="イベントタイプ"
                 buttonLabels={eventTypes}
                 selected={0}
+                handleSelected={() => {}}
               />
             </div>
             <div className="flex-grow">

@@ -20,9 +20,11 @@ export const Footer = () => {
           </li>
           <li className="relative">
             <div className="absolute w-14 h-14 flex items-center justify-center -top-10 -left-7 bg-accent rounded-full">
-              <IconContext.Provider value={{ size: '28px' }}>
-                <BsCalendar3 />
-              </IconContext.Provider>
+              <Link href={'/pages/calendar'}>
+                <IconContext.Provider value={{ size: '28px' }}>
+                  <BsCalendar3 />
+                </IconContext.Provider>
+              </Link>
             </div>
           </li>
           <li>

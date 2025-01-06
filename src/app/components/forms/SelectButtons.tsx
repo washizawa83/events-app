@@ -6,10 +6,22 @@ type Props = {
   label: string
   buttonLabels: string[]
   selected: number
+  handleSelected: (selected: number) => void
 }
 
-export const SelectButtons = ({ label, buttonLabels, selected }: Props) => {
+export const SelectButtons = ({
+  label,
+  buttonLabels,
+  selected,
+  handleSelected,
+}: Props) => {
   const [selectedButton, setSelectedButton] = useState(selected)
+
+  const onClickSelectButton = (index: number) => {
+    setSelectedButton(index)
+    handleSelected(index)
+  }
+
   return (
     <div className="flex flex-wrap flex-col">
       <label className="text-sm" htmlFor="">
@@ -20,7 +32,7 @@ export const SelectButtons = ({ label, buttonLabels, selected }: Props) => {
           <button
             key={index}
             className={`min-w-24 h-8 px-2 first-of-type:rounded-l-lg last-of-type:rounded-r-lg ${selectedButton === index ? 'bg-valiantDark border border-accent' : 'bg-secondary'}`}
-            onClick={() => setSelectedButton(index)}
+            onClick={() => onClickSelectButton(index)}
           >
             <span className="text-sm">{label}</span>
           </button>
