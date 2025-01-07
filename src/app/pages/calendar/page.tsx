@@ -4,7 +4,8 @@ import { Button } from '@/app/components/forms/Button'
 import { SelectButtons } from '@/app/components/forms/SelectButtons'
 import { BasePageLayout } from '@/app/components/layouts/BasePageLayout'
 import { Calendar } from '@/app/features/calendars/Calendar'
-import { CalendarTimeLine } from '@/app/features/calendars/CalendarTimeLine'
+import { CalendarTimeSchedule } from '@/app/features/calendars/CalendarTimeSchedule'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 enum CalendarScope {
@@ -12,6 +13,45 @@ enum CalendarScope {
   month,
   week,
 }
+
+const events = [
+  {
+    id: '01',
+    title: '沖縄ご当地フェア in 長野',
+    startTime: dayjs().add(-1, 'hour'),
+    endTime: dayjs().add(1, 'hour'),
+  },
+  {
+    id: '02',
+    title: '京都ご当地フェア in 長野',
+    startTime: dayjs(),
+    endTime: dayjs().add(1, 'hour'),
+  },
+  {
+    id: '03',
+    title: 'MHW ゲーム配信',
+    startTime: dayjs().add(2, 'hour'),
+    endTime: dayjs().add(4, 'hour'),
+  },
+  {
+    id: '04',
+    title: '歯医者',
+    startTime: dayjs().add(2, 'hour'),
+    endTime: dayjs().add(3, 'hour'),
+  },
+  {
+    id: '05',
+    title: 'MHW ゲーム配信2',
+    startTime: dayjs().add(2, 'hour'),
+    endTime: dayjs().add(4, 'hour'),
+  },
+  {
+    id: '06',
+    title: 'マイクラ ゲーム配信2',
+    startTime: dayjs().add(3, 'hour'),
+    endTime: dayjs().add(4, 'hour'),
+  },
+]
 
 const CalendarPage = () => {
   const [calendarScope, setCalendarScope] = useState<CalendarScope>(
@@ -30,7 +70,7 @@ const CalendarPage = () => {
             <Button label="イベントを追加" size="s" handleClick={() => {}} />
           </div>
           <div className="h-full overflow-y-auto">
-            <CalendarTimeLine />
+            <CalendarTimeSchedule events={events} timeScheduleWidth={400} />
           </div>
         </div>
         <div className="flex flex-col h-full flex-grow">
