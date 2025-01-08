@@ -1,7 +1,7 @@
 'use client'
 
 import dayjs, { Dayjs } from 'dayjs'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 type Props = {
   events: ScheduleEvent[]
@@ -27,6 +27,7 @@ type ScheduleEvent = {
 
 const TimeSchedulePaddingPx = 8
 const TimeLineRowHeightPx = 80
+const TimeQuarterHeight = TimeLineRowHeightPx / 4
 const TimeLineRowBorderMargin = 12
 const timeLineWidthPct = 20
 const eventCellWidthPct = 100 - timeLineWidthPct
@@ -81,19 +82,30 @@ const createScheduleMap = (sortedEvents: ScheduleEvent[]) => {
   const scheduleMap: { [key: number]: ScheduleEvent[] } = {}
   sortedEvents.forEach((event) => {
     const startTimeHour = event.startTime.hour()
-    const eventTimeScope = event.endTime.diff(event.startTime, 'hour')
+    const isCrossingDays = event.startTime.date() !== event.endTime.date()
+    const eventTimeScope = isCrossingDays
+      ? 24 - startTimeHour
+      : event.endTime.diff(event.startTime, 'hour')
+
+    // 開始・終了時間が同一の場合
+    if (eventTimeScope === 0) {
+      scheduleMap[startTimeHour] = scheduleMap[startTimeHour] || []
+      scheduleMap[startTimeHour].push(event)
+      return
+    }
     createArray(eventTimeScope).forEach((_, index) => {
-      if (index === 0) {
-        scheduleMap[startTimeHour] = scheduleMap[startTimeHour] || []
-        return scheduleMap[startTimeHour].push(event)
-      }
-      if (startTimeHour + index >= 24) return
-      scheduleMap[startTimeHour + index] =
-        scheduleMap[startTimeHour + index] || []
-      return scheduleMap[startTimeHour + index].push(event)
+      const key = startTimeHour + index
+      scheduleMap[key] = scheduleMap[key] || []
+      scheduleMap[key].push(event)
+      return
     })
   })
   return scheduleMap
+}
+
+const getQuarterTime = (minute: number) => {
+  const quarterTime = 15
+  return Math.floor(minute / quarterTime)
 }
 
 export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
@@ -101,11 +113,33 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
   const [eventCellParams, setEventCellParams] = useState<EventElementParam[]>(
     [],
   )
+  const ref = React.createRef<HTMLSpanElement>()
   const timeLineWidth = timeScheduleWidth * (timeLineWidthPct * 0.01)
   const eventCellWidth = timeScheduleWidth * (eventCellWidthPct * 0.01)
 
   const isNowHour = (time: string) => {
     return currentDateTime.format('Ahh') + ':00' === time
+  }
+
+  const calcScheduleTop = (event: ScheduleEvent) => {
+    return (
+      event.startTime.hour() * TimeLineRowHeightPx +
+      TimeLineRowBorderMargin +
+      getQuarterTime(event.startTime.minute()) * TimeQuarterHeight
+    )
+  }
+
+  const calcScheduleHeight = (event: ScheduleEvent) => {
+    const isCrossingDays = event.startTime.date() !== event.endTime.date()
+    const totalMinute = isCrossingDays
+      ? event.endTime.hour(0).minute(0).diff(event.startTime, 'minute')
+      : event.endTime.diff(event.startTime, 'minute')
+
+    const hour = Math.floor(totalMinute / 60)
+    const minute = totalMinute % 60
+    return (
+      hour * TimeLineRowHeightPx + getQuarterTime(minute) * TimeQuarterHeight
+    )
   }
 
   const calcScheduleWidth = (
@@ -149,19 +183,24 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
       const sortedEvents = sortEventsByStartTime(events)
       const scheduleMap = createScheduleMap(sortedEvents)
 
-      return sortedEvents.map((event) => ({
-        ...event,
-        top:
-          event.startTime.hour() * TimeLineRowHeightPx +
-          TimeLineRowBorderMargin,
-        left: calcScheduleElementLeftPx(scheduleMap, event),
-        height:
-          // 0時をまたがる場合(23:00 ~ 1:00など)、1 - 23になってしまう
-          (event.endTime.hour() - event.startTime.hour()) * TimeLineRowHeightPx,
-        width: calcScheduleWidth(scheduleMap, event),
-      }))
+      return sortedEvents.map((event) => {
+        const top = calcScheduleTop(event)
+        const height = calcScheduleHeight(event)
+        return {
+          ...event,
+          top,
+          left: calcScheduleElementLeftPx(scheduleMap, event),
+          height,
+          width: calcScheduleWidth(scheduleMap, event),
+        }
+      })
     }
     setEventCellParams(createEventCellElementParams())
+
+    ref!.current!.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
   }, [events])
 
   return (
@@ -175,6 +214,7 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
           <span
             className={`${isNowHour(time) && 'text-accent'}`}
             style={{ width: `${timeLineWidth}px` }}
+            ref={isNowHour(time) ? ref : undefined}
           >
             {time}
           </span>

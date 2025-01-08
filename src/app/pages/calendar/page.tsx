@@ -16,40 +16,46 @@ enum CalendarScope {
 
 const events = [
   {
+    id: '00',
+    title: 'オールナイトイベント',
+    startTime: dayjs().add(-1, 'day').hour(22).minute(0),
+    endTime: dayjs().hour(6).minute(0),
+  },
+  {
     id: '01',
     title: '沖縄ご当地フェア in 長野',
-    startTime: dayjs().add(-1, 'hour'),
-    endTime: dayjs().add(1, 'hour'),
+    startTime: dayjs().hour(9).minute(15),
+    endTime: dayjs().hour(11).minute(30),
   },
   {
     id: '02',
     title: '京都ご当地フェア in 長野',
-    startTime: dayjs(),
-    endTime: dayjs().add(1, 'hour'),
+    startTime: dayjs().hour(12).minute(0),
+    endTime: dayjs().hour(13).minute(30),
   },
   {
     id: '03',
     title: 'MHW ゲーム配信',
-    startTime: dayjs().add(2, 'hour'),
-    endTime: dayjs().add(4, 'hour'),
+    startTime: dayjs().hour(18).minute(0),
+    endTime: dayjs().hour(20).minute(0),
   },
   {
     id: '04',
     title: '歯医者',
-    startTime: dayjs().add(2, 'hour'),
-    endTime: dayjs().add(3, 'hour'),
+    startTime: dayjs().hour(18).minute(0),
+    endTime: dayjs().hour(18).minute(30),
   },
   {
     id: '05',
-    title: 'MHW ゲーム配信2',
-    startTime: dayjs().add(2, 'hour'),
-    endTime: dayjs().add(4, 'hour'),
+    title: 'ハウスダーツ大会',
+    startTime: dayjs().hour(22).minute(0),
+    endTime: dayjs().hour(24).minute(0),
   },
   {
     id: '06',
-    title: 'マイクラ ゲーム配信2',
-    startTime: dayjs().add(3, 'hour'),
-    endTime: dayjs().add(4, 'hour'),
+    title: 'マイクラ ゲーム配信',
+    startTime: dayjs().hour(20).minute(0),
+    endTime: dayjs().add(1, 'day').hour(2).minute(30),
   },
 ]
 
