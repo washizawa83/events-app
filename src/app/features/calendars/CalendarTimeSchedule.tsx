@@ -82,10 +82,7 @@ const createScheduleMap = (sortedEvents: ScheduleEvent[]) => {
   const scheduleMap: { [key: number]: ScheduleEvent[] } = {}
   sortedEvents.forEach((event) => {
     const startTimeHour = event.startTime.hour()
-    const isCrossingDays = event.startTime.date() !== event.endTime.date()
-    const eventTimeScope = isCrossingDays
-      ? 24 - startTimeHour
-      : event.endTime.diff(event.startTime, 'hour')
+    const eventTimeScope = event.endTime.diff(event.startTime, 'hour')
 
     // 開始・終了時間が同一の場合
     if (eventTimeScope === 0) {
@@ -108,18 +105,35 @@ const getQuarterTime = (minute: number) => {
   return Math.floor(minute / quarterTime)
 }
 
+const convertEvents = (sortedEvents: ScheduleEvent[]): ScheduleEvent[] => {
+  return sortedEvents.map((event) => {
+    const startTime =
+      event.startTime.date() === dayjs().date()
+        ? event.startTime
+        : dayjs().hour(0).minute(0).second(0)
+    const endTime =
+      event.endTime.date() === dayjs().date()
+        ? event.endTime
+        : dayjs().hour(24).minute(0).second(0)
+    return {
+      ...event,
+      startTime,
+      endTime,
+    }
+  })
+}
+
+const isNowHour = (time: string) => {
+  return dayjs().format('Ahh') + ':00' === time
+}
+
 export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
-  const currentDateTime = dayjs()
   const [eventCellParams, setEventCellParams] = useState<EventElementParam[]>(
     [],
   )
   const ref = React.createRef<HTMLSpanElement>()
   const timeLineWidth = timeScheduleWidth * (timeLineWidthPct * 0.01)
   const eventCellWidth = timeScheduleWidth * (eventCellWidthPct * 0.01)
-
-  const isNowHour = (time: string) => {
-    return currentDateTime.format('Ahh') + ':00' === time
-  }
 
   const calcScheduleTop = (event: ScheduleEvent) => {
     return (
@@ -130,11 +144,7 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
   }
 
   const calcScheduleHeight = (event: ScheduleEvent) => {
-    const isCrossingDays = event.startTime.date() !== event.endTime.date()
-    const totalMinute = isCrossingDays
-      ? event.endTime.hour(0).minute(0).diff(event.startTime, 'minute')
-      : event.endTime.diff(event.startTime, 'minute')
-
+    const totalMinute = event.endTime.diff(event.startTime, 'minute')
     const hour = Math.floor(totalMinute / 60)
     const minute = totalMinute % 60
     return (
@@ -180,17 +190,16 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
 
   useEffect(() => {
     const createEventCellElementParams = () => {
-      const sortedEvents = sortEventsByStartTime(events)
+      const convertedEvents = convertEvents(events)
+      const sortedEvents = sortEventsByStartTime(convertedEvents)
       const scheduleMap = createScheduleMap(sortedEvents)
 
       return sortedEvents.map((event) => {
-        const top = calcScheduleTop(event)
-        const height = calcScheduleHeight(event)
         return {
           ...event,
-          top,
+          top: calcScheduleTop(event),
           left: calcScheduleElementLeftPx(scheduleMap, event),
-          height,
+          height: calcScheduleHeight(event),
           width: calcScheduleWidth(scheduleMap, event),
         }
       })
