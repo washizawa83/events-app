@@ -109,12 +109,12 @@ const convertEvents = (sortedEvents: ScheduleEvent[]): ScheduleEvent[] => {
   return sortedEvents.map((event) => {
     const startTime =
       event.startTime.date() === dayjs().date()
-        ? event.startTime
-        : dayjs().hour(0).minute(0).second(0)
+        ? event.startTime.startOf('minute')
+        : dayjs().hour(0).minute(0).startOf('minute')
     const endTime =
       event.endTime.date() === dayjs().date()
-        ? event.endTime
-        : dayjs().hour(24).minute(0).second(0)
+        ? event.endTime.startOf('minute')
+        : dayjs().hour(24).minute(0).startOf('minute')
     return {
       ...event,
       startTime,
