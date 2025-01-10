@@ -15,26 +15,26 @@ export const DateForm = ({ label }: Props) => {
   const [isOpenCalendar, setIsOpenCalendar] = useState(false)
 
   return (
-    <div className="flex flex-wrap flex-col">
+    <div className="flex flex-col flex-wrap">
       <label className="text-sm" htmlFor={label}>
         {label}
       </label>
-      <div className="relative flex items-center w-48">
+      <div className="relative flex w-48 items-center">
         <input
-          className="h-8 outline-none rounded-l-lg px-2 text-gray-800 w-full"
+          className="h-8 w-full rounded-l-lg px-2 text-gray-800 outline-none"
           type="text"
           defaultValue={value}
           placeholder={currentDate.format('YYYY/MM/DD')}
         />
         <div>
           <button
-            className="rounded-r-lg h-8 p-2 bg-valiantDark"
+            className="h-8 rounded-r-lg bg-valiantDark p-2"
             onClick={() => setIsOpenCalendar(!isOpenCalendar)}
           >
             <BsCalendar3 />
           </button>
           {isOpenCalendar && (
-            <div className="absolute top-10 left-0">
+            <div className="absolute left-0 top-10">
               <Calendar
                 handleSelectedDay={(day) => {
                   setValue(day.format('YYYY/MM/DD'))

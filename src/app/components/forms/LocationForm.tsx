@@ -6,7 +6,7 @@ type Props = {
 
 export const LocationForm = ({ label }: Props) => {
   return (
-    <div className="flex flex-wrap flex-col w-full">
+    <div className="flex w-full flex-col flex-wrap">
       <label className="text-sm" htmlFor={label}>
         {label}
       </label>

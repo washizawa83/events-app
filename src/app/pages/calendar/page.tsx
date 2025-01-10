@@ -71,15 +71,15 @@ const CalendarPage = () => {
   return (
     <BasePageLayout>
       <div className="flex h-[calc(100vh-56px)]">
-        <div className="flex flex-col h-full w-[420px] bg-valiantDark">
-          <div className="w-full p-2 h-28">
+        <div className="flex h-full w-[420px] flex-col bg-valiantDark">
+          <div className="h-28 w-full p-2">
             <Button label="イベントを追加" size="s" handleClick={() => {}} />
           </div>
           <div className="h-full overflow-y-auto">
             <CalendarTimeSchedule events={events} timeScheduleWidth={400} />
           </div>
         </div>
-        <div className="flex flex-col h-full flex-grow">
+        <div className="flex h-full flex-grow flex-col">
           <div className="flex justify-end bg-primary p-2">
             <SelectButtons
               label=""

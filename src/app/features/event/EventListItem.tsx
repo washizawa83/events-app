@@ -17,28 +17,28 @@ export const EventListItem = ({
   tags,
 }: Props) => {
   return (
-    <li className="sm:flex flex-wrap py-3 mb-3 border-b border-secondary block">
-      <div className="xl:basis-2/3 basis-full">
-        <h2 className="text-xl mb-2">{title}</h2>
-        <p className="text-gray-300 mb-2">{description}</p>
+    <li className="mb-3 block flex-wrap border-b border-secondary py-3 sm:flex">
+      <div className="basis-full xl:basis-2/3">
+        <h2 className="mb-2 text-xl">{title}</h2>
+        <p className="mb-2 text-gray-300">{description}</p>
         <div className="flex items-center">
           <span className="mr-3">
             <SlTag />
           </span>
-          <ul className="flex items-center flex-wrap">
+          <ul className="flex flex-wrap items-center">
             {tags?.map((tag) => (
-              <li key={tag} className="mr-2 mb-2">
+              <li key={tag} className="mb-2 mr-2">
                 <Tip label={tag} />
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <div className="xl:basis-1/3 basis-full min-w-40">
-        <div className="flex items-center h-10">
+      <div className="min-w-40 basis-full xl:basis-1/3">
+        <div className="flex h-10 items-center">
           <p>場所：{address}</p>
         </div>
-        <div className="flex items-center h-10">
+        <div className="flex h-10 items-center">
           <p>日程：{schedule}</p>
         </div>
       </div>

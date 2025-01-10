@@ -14,8 +14,8 @@ type Props = {
 
 export const EventList = ({ events }: Props) => {
   return (
-    <div className="bg-valiant flex-1 overflow-y-auto">
-      <ul className="w-11/12 mx-auto py-5">
+    <div className="flex-1 overflow-y-auto bg-valiant">
+      <ul className="mx-auto w-11/12 py-5">
         {events ? (
           events.map((event, index) => (
             <EventListItem

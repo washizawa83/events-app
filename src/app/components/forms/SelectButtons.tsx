@@ -23,7 +23,7 @@ export const SelectButtons = ({
   }
 
   return (
-    <div className="flex flex-wrap flex-col">
+    <div className="flex flex-col flex-wrap">
       <label className="text-sm" htmlFor="">
         {label}
       </label>
@@ -31,7 +31,7 @@ export const SelectButtons = ({
         {buttonLabels.map((label, index) => (
           <button
             key={index}
-            className={`min-w-24 h-8 px-2 first-of-type:rounded-l-lg last-of-type:rounded-r-lg ${selectedButton === index ? 'bg-valiantDark border border-accent' : 'bg-secondary'}`}
+            className={`h-8 min-w-24 px-2 first-of-type:rounded-l-lg last-of-type:rounded-r-lg ${selectedButton === index ? 'border border-accent bg-valiantDark' : 'bg-secondary'}`}
             onClick={() => onClickSelectButton(index)}
           >
             <span className="text-sm">{label}</span>

@@ -4,7 +4,7 @@ type Props = {
 
 export const Tip = ({ label }: Props) => {
   return (
-    <div className="min-w-20 px-4 bg-accent rounded-xl text-center">
+    <div className="min-w-20 rounded-xl bg-accent px-4 text-center">
       <p className="text-sm text-white">{label}</p>
     </div>
   )

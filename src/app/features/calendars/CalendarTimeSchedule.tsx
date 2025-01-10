@@ -213,7 +213,7 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
   }, [events])
 
   return (
-    <div className="relative w-full h-full px-2">
+    <div className="relative h-full w-full px-2">
       {Times.map((time) => (
         <div
           key={time}
@@ -239,7 +239,7 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
       {eventCellParams.map((event, index) => (
         <div
           key={index}
-          className="absolute flex bg-accent/50 rounded-lg overflow-hidden"
+          className="absolute flex overflow-hidden rounded-lg bg-accent/50"
           style={{
             top: event.top,
             left: event.left,
@@ -247,7 +247,7 @@ export const CalendarTimeSchedule = ({ events, timeScheduleWidth }: Props) => {
             width: event.width,
           }}
         >
-          <div className="absolute w-1 h-full bg-accent"></div>
+          <div className="absolute h-full w-1 bg-accent"></div>
           <div className="px-2">{event.title}</div>
         </div>
       ))}
