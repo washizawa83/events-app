@@ -1,33 +1,42 @@
-type Props = {
+import { tv, VariantProps } from 'tailwind-variants'
+
+type ButtonVariants = VariantProps<typeof button>
+
+export const button = tv({
+  base: 'px-4 py-1 min-w-20 text-base rounded',
+  variants: {
+    size: {
+      s: 'px-4 py-1 min-w-20 text-base',
+      m: 'px-6 py-2 min-w-32 text-lg',
+      l: 'px-8 py-3 min-w-40 text-xl',
+    },
+    color: {
+      success: 'bg-accent hover:bg-accentFocus focus:bg-accentFocus',
+      variant: 'bg-valiant',
+    },
+  },
+  defaultVariants: {
+    size: 's',
+    color: 'success',
+  },
+})
+
+type ButtonProps = {
   label: string
   type?: 'button' | 'submit'
-  color?: 'success' | 'valiant'
-  size?: 's' | 'm' | 'l'
   handleClick: () => void
-}
-
-const buttonSizeStyle = {
-  s: 'px-4 py-1 min-w-20 text-base',
-  m: 'px-6 py-2 min-w-32 text-lg',
-  l: 'px-8 py-3 min-w-40 text-xl',
-}
-
-const backgroundColor = {
-  success: 'bg-accent',
-  valiant: 'bg-valiant',
-}
+} & ButtonVariants
 
 export const Button = ({
   label,
   type = 'button',
-  size = 'm',
-  color = 'success',
   handleClick,
-}: Props) => {
+  ...variants
+}: ButtonProps) => {
   return (
     <button
       type={type}
-      className={`flex items-center justify-center bg-baseButton px-2 py-1 rounded-lg outline-none text-white ${buttonSizeStyle[size]} ${backgroundColor[color]} hover:opacity-70 focus:opacity-70`}
+      className={button({ ...variants })}
       onClick={handleClick}
     >
       {label}

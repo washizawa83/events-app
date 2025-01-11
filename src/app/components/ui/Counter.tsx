@@ -15,10 +15,10 @@ export const Counter = ({ label, count }: Props) => {
 
   return (
     <div className="flex items-center text-center">
-      <div className="flex items-center justify-center min-w-24 h-6 bg-accent px-4 rounded-l-xl">
+      <div className="flex h-6 min-w-24 items-center justify-center rounded-l-xl bg-accent px-4">
         <p className="text-sm">{label}</p>
       </div>
-      <div className="min-w-11 h-6 bg-secondary rounded-r-xl">
+      <div className="h-6 min-w-11 rounded-r-xl bg-secondary">
         <p>{convertKiloForCount(count)}</p>
       </div>
     </div>

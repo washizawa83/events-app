@@ -2,18 +2,23 @@
 
 import { getMonthDays } from '@/app/utils/calendar/days-util'
 import dayjs from 'dayjs'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 type Props = {
+  isFullScreen?: boolean
+  darkMode?: boolean
   handleSelectedDay: (day: dayjs.Dayjs) => void
 }
 
 const dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-export const Calendar = ({ handleSelectedDay }: Props) => {
+export const Calendar = ({
+  isFullScreen = false,
+  darkMode = false,
+  handleSelectedDay,
+}: Props) => {
   const currentDate = dayjs()
-  const componentRef = useRef<HTMLDivElement | null>(null)
   const [selectedDay, setSelectedDay] = useState<dayjs.Dayjs>(currentDate)
   const [selectedMonth, setSelectedMonth] = useState(currentDate)
   const [monthDays, setMonthDays] = useState(getMonthDays())
@@ -42,62 +47,55 @@ export const Calendar = ({ handleSelectedDay }: Props) => {
   }
 
   return (
-    <div className="bg-slate-100 text-gray-800 rounded-lg" ref={componentRef}>
-      <div className="flex items-center justify-center md:h-16 h-12">
+    <div
+      className={`flex flex-col overflow-hidden ${isFullScreen ? 'h-full' : 'rounded-lg'} ${darkMode ? 'bg-valiant text-gray-100' : 'bg-slate-100 text-gray-800'}`}
+    >
+      <div
+        className={`flex h-12 items-center justify-center md:h-16 ${darkMode && 'bg-primary'}`}
+      >
         <button
-          className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default ml-1"
+          className="ml-1 flex h-8 w-8 cursor-default items-center justify-center rounded-full hover:bg-slate-300"
           onClick={() => setMonthDelta(-1)}
         >
           <IoIosArrowBack />
         </button>
-        <div className="w-40 mx-auto text-center">
+        <div className="mx-auto w-40 text-center">
           <span className="mx-2">{selectedMonth.format('YYYY')}</span>
           <span className="mx-2">{selectedMonth.format('MMMM')}</span>
         </div>
         <button
-          className="flex items-center justify-center hover:bg-slate-300 w-8 h-8 rounded-full cursor-default mr-1"
+          className="mr-1 flex h-8 w-8 cursor-default items-center justify-center rounded-full hover:bg-slate-300"
           onClick={() => setMonthDelta(1)}
         >
           <IoIosArrowForward />
         </button>
       </div>
-      <div className="border rounded-2xl border-gray-200 overflow-hidden">
-        <div className="flex items-center w-full border-b">
+      <div
+        className={`flex flex-grow flex-col overflow-hidden border ${darkMode ? 'border-primary' : 'border-gray-200'}`}
+      >
+        <div
+          className={`flex h-10 w-full items-center border-b ${darkMode ? 'border-primary' : 'border-gray-200'}`}
+        >
           {dayOfWeeks.map((dayOfWeek) => (
             <div className="basis-1/7 text-center" key={dayOfWeek}>
               <p className="text-sm">{dayOfWeek}</p>
             </div>
           ))}
         </div>
-        <div>
+        <div className="h-full">
           {monthDays.map((week, index) => (
             <div
               key={index}
-              className="flex items-center border-b last-of-type:border-none"
+              className={`flex h-1/5 items-center border-b last-of-type:border-none ${darkMode ? 'border-primary' : 'border-gray-200'}`}
             >
               {week.map((day, index) => (
                 <button
-                  className={`
-										flex
-										items-center
-										justify-center
-										basis-1/7
-										text-center
-										md:p-0
-										py-2
-										border-r
-										last-of-type:border-none
-										hover:bg-slate-300
-										cursor-default
-										${!isThisMonth(day) && 'bg-slate-200'}
-										${selectedDay?.format('YYYY/MM/DD') === day.format('YYYY/MM/DD') && 'text-accent'}
-										${componentRef.current?.clientWidth && componentRef.current.clientWidth >= 500 ? 'aspect-3/2' : 'aspect-square'}
-									`}
+                  className={`flex h-full basis-1/7 cursor-default items-center justify-center border-r py-2 text-center last-of-type:border-none md:p-0 ${darkMode ? 'border-primary bg-valiant hover:bg-[#50505e]' : 'border-gray-200 bg-slate-100 hover:bg-slate-300'} ${!isFullScreen && 'aspect-square'} ${!isThisMonth(day) && (darkMode ? 'bg-valiantDark' : 'bg-slate-200')} ${selectedDay?.format('YYYY/MM/DD') === day.format('YYYY/MM/DD') && 'text-accent'} `}
                   key={index}
                   onClick={() => selectDay(day)}
                 >
                   <p
-                    className={`flex items-center justify-center w-6 h-6 md:text-basic text-sm ${isThisDay(day) && 'rounded-full border border-accent'}`}
+                    className={`md:text-basic flex h-6 w-6 items-center justify-center text-sm ${isThisDay(day) && 'rounded-full border border-accent'}`}
                   >
                     {day.format('D')}
                   </p>

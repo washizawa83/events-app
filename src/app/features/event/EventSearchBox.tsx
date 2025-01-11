@@ -14,10 +14,10 @@ export const EventSearchBox = () => {
   const [isOpenRefineForm, setIsOpenRefineForm] = useState(false)
 
   return (
-    <div className="py-4 bg-primary">
-      <div className="w-11/12 mx-auto">
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex-grow mr-10">
+    <div className="bg-primary py-4">
+      <div className="mx-auto w-11/12">
+        <div className="mb-5 flex items-center justify-between">
+          <div className="mr-10 flex-grow">
             <TextForm label="キーワード" />
           </div>
           <div className="mt-5">
@@ -28,27 +28,28 @@ export const EventSearchBox = () => {
           <Button
             label="絞り込む"
             size="s"
-            color="valiant"
+            color="variant"
             handleClick={() => setIsOpenRefineForm(!isOpenRefineForm)}
           />
         </div>
         <div
-          className={`sm:flex flex-wrap items-center justify-between lg:flex-row flex-col ${isOpenRefineForm ? 'flex' : 'hidden'}`}
+          className={`flex-col flex-wrap items-center justify-between sm:flex lg:flex-row ${isOpenRefineForm ? 'flex' : 'hidden'}`}
         >
-          <div className="sm:flex items-center lg:w-[48%] w-full mb-5">
-            <div className="sm:mb-0 mr-5 mb-5">
+          <div className="mb-5 w-full items-center sm:flex lg:w-[48%]">
+            <div className="mb-5 mr-5 sm:mb-0">
               <SelectButtons
                 label="イベントタイプ"
                 buttonLabels={eventTypes}
                 selected={0}
+                handleSelected={() => {}}
               />
             </div>
             <div className="flex-grow">
               <LocationForm label="場所" />
             </div>
           </div>
-          <div className="sm:flex items-center lg:justify-end lg:w-[48%] w-full mb-5">
-            <div className="sm:mb-0 mr-5 mb-5">
+          <div className="mb-5 w-full items-center sm:flex lg:w-[48%] lg:justify-end">
+            <div className="mb-5 mr-5 sm:mb-0">
               <DateForm label="日程" />
             </div>
             <div className="flex-grow">

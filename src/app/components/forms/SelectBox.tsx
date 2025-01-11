@@ -27,8 +27,8 @@ export const SelectBox = ({ label, options }: Props) => {
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative w-full">
-        <Label className="text-gray-900 text-sm">{label}</Label>
-        <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-lg bg-white py-1.5 pl-3 pr-2 text-left text-gray-900 sm:text-sm/6 h-8">
+        <Label className="text-sm text-gray-900">{label}</Label>
+        <ListboxButton className="grid h-8 w-full cursor-default grid-cols-1 rounded-lg bg-white py-1.5 pl-3 pr-2 text-left text-gray-900 sm:text-sm/6">
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
             <span className="block truncate">{selected?.label}</span>
           </span>

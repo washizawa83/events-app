@@ -24,8 +24,8 @@ const mockUser = {
 const UserPage = () => {
   return (
     <BasePageLayout>
-      <div className="flex lg:flex-row flex-col h-[calc(100vh-56px)]">
-        <div className="lg:w-1/4 w-full">
+      <div className="flex h-[calc(100vh-56px)] flex-col lg:flex-row">
+        <div className="w-full lg:w-1/4">
           <UserPageSidebar
             name={mockUser.name}
             id={mockUser.id}
@@ -34,7 +34,7 @@ const UserPage = () => {
             description={mockUser.description}
           />
         </div>
-        <div className="lg:w-3/4 w-full flex-1">
+        <div className="w-full flex-1 lg:w-3/4">
           <UserPageSummary events={mockUser.events} />
         </div>
       </div>

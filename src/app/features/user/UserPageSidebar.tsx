@@ -21,14 +21,14 @@ export const UserPageSidebar = ({
   return (
     <div className="h-full bg-primary">
       <div className="bg-valiantDark p-4">
-        <div className="flex flex-col items-center justify-center mb-3">
+        <div className="mb-3 flex flex-col items-center justify-center">
           <div className="h-24 w-24 rounded-full bg-[url('/images/mock-user-icon.jpg')] bg-cover bg-no-repeat"></div>
           <div>
             <p className="text-sm text-gray-300">id: {id}</p>
             <p className="text-xl">{name}</p>
           </div>
         </div>
-        <div className="flex items-center flex-wrap justify-around mb-3">
+        <div className="mb-3 flex flex-wrap items-center justify-around">
           <div className="mb-2">
             <Counter label="Subscribe" count={subscribe} />
           </div>

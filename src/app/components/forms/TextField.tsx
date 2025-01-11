@@ -1,7 +1,7 @@
 export const TextField = () => {
   return (
     <input
-      className="rounded-lg text-gray-800 h-8 outline-none px-2"
+      className="h-8 rounded-lg px-2 text-gray-800 outline-none"
       type="text"
     />
   )

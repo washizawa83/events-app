@@ -8,9 +8,9 @@ import { UserIconButton } from '../ui/UserIconButton'
 
 export const Footer = () => {
   return (
-    <footer className="sm:hidden fixed bottom-0 flex items-center w-screen h-14 bg-secondary">
-      <div className="w-11/12 mx-auto flex items-center justify-between">
-        <ul className="flex items-center justify-around w-full">
+    <footer className="fixed bottom-0 flex h-14 w-screen items-center bg-secondary sm:hidden">
+      <div className="mx-auto flex w-11/12 items-center justify-between">
+        <ul className="flex w-full items-center justify-around">
           <li>
             <Link href={'/pages/search'}>
               <IconContext.Provider value={{ size: '24px' }}>
@@ -19,10 +19,12 @@ export const Footer = () => {
             </Link>
           </li>
           <li className="relative">
-            <div className="absolute w-14 h-14 flex items-center justify-center -top-10 -left-7 bg-accent rounded-full">
-              <IconContext.Provider value={{ size: '28px' }}>
-                <BsCalendar3 />
-              </IconContext.Provider>
+            <div className="absolute -left-7 -top-10 flex h-14 w-14 items-center justify-center rounded-full bg-accent">
+              <Link href={'/pages/calendar'}>
+                <IconContext.Provider value={{ size: '28px' }}>
+                  <BsCalendar3 />
+                </IconContext.Provider>
+              </Link>
             </div>
           </li>
           <li>
