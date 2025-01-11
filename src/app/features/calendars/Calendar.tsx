@@ -48,7 +48,7 @@ export const Calendar = ({
 
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-lg ${darkMode ? 'bg-valiant text-gray-100' : 'bg-slate-100 text-gray-800'} ${isFullScreen && 'h-full'}`}
+      className={`flex flex-col overflow-hidden ${isFullScreen ? 'h-full' : 'rounded-lg'} ${darkMode ? 'bg-valiant text-gray-100' : 'bg-slate-100 text-gray-800'}`}
     >
       <div
         className={`flex h-12 items-center justify-center md:h-16 ${darkMode && 'bg-primary'}`}

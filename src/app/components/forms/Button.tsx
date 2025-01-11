@@ -3,7 +3,7 @@ import { tv, VariantProps } from 'tailwind-variants'
 type ButtonVariants = VariantProps<typeof button>
 
 export const button = tv({
-  base: 'px-4 py-1 min-w-20 text-base rounded hover:opacity-70 focus:opacity-70',
+  base: 'px-4 py-1 min-w-20 text-base rounded',
   variants: {
     size: {
       s: 'px-4 py-1 min-w-20 text-base',
@@ -11,7 +11,7 @@ export const button = tv({
       l: 'px-8 py-3 min-w-40 text-xl',
     },
     color: {
-      success: 'bg-accent',
+      success: 'bg-accent hover:bg-accentFocus focus:bg-accentFocus',
       variant: 'bg-valiant',
     },
   },

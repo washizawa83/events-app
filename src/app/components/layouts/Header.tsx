@@ -8,7 +8,7 @@ import { UserIconButton } from '../ui/UserIconButton'
 export const Header = () => {
   return (
     <header className="hidden h-14 w-screen items-center bg-secondary sm:flex">
-      <div className="mx-auto flex w-11/12 items-center justify-between">
+      <div className="mx-auto flex w-11/12 items-center justify-between 2xl:w-[1280px]">
         <div>
           <h1 className="font-krona">
             <Link href="/pages/search">Events</Link>
