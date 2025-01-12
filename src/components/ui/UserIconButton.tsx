@@ -24,14 +24,14 @@ export const UserIconButton = ({ userIcon, menuLocation }: Props) => {
         >
           <ul className="text-gray-800">
             <Link
-              href={'/pages/user'}
+              href={'/user'}
               className="mb-2 block p-2 text-sm hover:bg-gray-300"
               onClick={() => setIsOpenMenu(false)}
             >
               マイページ
             </Link>
             <Link
-              href={'/pages/user'}
+              href={'/user'}
               className="block p-2 text-sm hover:bg-gray-300"
               onClick={() => setIsOpenMenu(false)}
             >

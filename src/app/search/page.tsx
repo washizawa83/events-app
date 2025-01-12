@@ -1,6 +1,6 @@
-import { BasePageLayout } from '@/app/components/layouts/BasePageLayout'
-import { EventList } from '@/app/features/event/EventList'
-import { EventSearchBox } from '@/app/features/event/EventSearchBox'
+import { BasePageLayout } from '@/components/layouts/BasePageLayout'
+import { EventList } from '@/features/event/EventList'
+import { EventSearchBox } from '@/features/event/EventSearchBox'
 
 const mockEvents = [
   {

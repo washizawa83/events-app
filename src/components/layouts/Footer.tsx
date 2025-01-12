@@ -12,7 +12,7 @@ export const Footer = () => {
       <div className="mx-auto flex w-11/12 items-center justify-between">
         <ul className="flex w-full items-center justify-around">
           <li>
-            <Link href={'/pages/search'}>
+            <Link href={'/search'}>
               <IconContext.Provider value={{ size: '24px' }}>
                 <GoHome />
               </IconContext.Provider>
@@ -20,7 +20,7 @@ export const Footer = () => {
           </li>
           <li className="relative">
             <div className="absolute -left-7 -top-10 flex h-14 w-14 items-center justify-center rounded-full bg-accent">
-              <Link href={'/pages/calendar'}>
+              <Link href={'/calendar'}>
                 <IconContext.Provider value={{ size: '28px' }}>
                   <BsCalendar3 />
                 </IconContext.Provider>

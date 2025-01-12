@@ -1,4 +1,4 @@
-import { Tip } from '@/app/components/ui/Tip'
+import { Tip } from '@/components/ui/Tip'
 import { SlTag } from 'react-icons/sl'
 
 type Props = {

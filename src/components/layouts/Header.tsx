@@ -11,7 +11,7 @@ export const Header = () => {
       <div className="mx-auto flex w-11/12 items-center justify-between 2xl:w-[1280px]">
         <div>
           <h1 className="font-krona">
-            <Link href="/pages/search">Events</Link>
+            <Link href="/search">Events</Link>
           </h1>
         </div>
         <ul className="flex items-center">
@@ -19,7 +19,7 @@ export const Header = () => {
             <NavigationLink
               icon={<BsCalendar3 />}
               label="カレンダー"
-              href="/pages/calendar"
+              href="/calendar"
             />
           </li>
           <li className="ml-10">
