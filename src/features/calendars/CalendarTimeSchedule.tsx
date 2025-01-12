@@ -1,5 +1,6 @@
 'use client'
 
+import { createRangeArray } from '@/utils/array-util'
 import dayjs, { Dayjs } from 'dayjs'
 import React, { useEffect, useState } from 'react'
 
@@ -59,13 +60,6 @@ const Times = [
   'PM11:00',
 ]
 
-const createArray = (length: number) => {
-  if (length <= 0 || !Number.isInteger(length)) {
-    throw new Error(`Error createArray requires positive integer`)
-  }
-  return [...Array(length)]
-}
-
 const sortEventsByStartTime = (events: ScheduleEvent[]) => {
   return events.sort((a, b) => {
     if (a.startTime.hour() === b.startTime.hour()) {
@@ -90,7 +84,7 @@ const createScheduleMap = (sortedEvents: ScheduleEvent[]) => {
       scheduleMap[startTimeHour].push(event)
       return
     }
-    createArray(eventTimeScope).forEach((_, index) => {
+    createRangeArray(eventTimeScope).forEach((_, index) => {
       const key = startTimeHour + index
       scheduleMap[key] = scheduleMap[key] || []
       scheduleMap[key].push(event)
