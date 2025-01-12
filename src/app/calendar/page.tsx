@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '@/app/components/forms/Button'
-import { SelectButtons } from '@/app/components/forms/SelectButtons'
-import { BasePageLayout } from '@/app/components/layouts/BasePageLayout'
-import { Calendar } from '@/app/features/calendars/Calendar'
-import { CalendarTimeSchedule } from '@/app/features/calendars/CalendarTimeSchedule'
+import { Button } from '@/components/forms/Button'
+import { SelectButtons } from '@/components/forms/SelectButtons'
+import { BasePageLayout } from '@/components/layouts/BasePageLayout'
+import { Calendar } from '@/features/calendars/Calendar'
+import { CalendarTimeSchedule } from '@/features/calendars/CalendarTimeSchedule'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 

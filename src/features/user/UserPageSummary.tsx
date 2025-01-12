@@ -1,7 +1,7 @@
 'use client'
 
-import { Button } from '@/app/components/forms/Button'
-import { SelectButtons } from '@/app/components/forms/SelectButtons'
+import { Button } from '@/components/forms/Button'
+import { SelectButtons } from '@/components/forms/SelectButtons'
 import { Calendar } from '../calendars/Calendar'
 import { Event, EventList } from '../event/EventList'
 

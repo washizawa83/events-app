@@ -1,6 +1,6 @@
-import { BasePageLayout } from '@/app/components/layouts/BasePageLayout'
-import { UserPageSidebar } from '@/app/features/user/UserPageSidebar'
-import { UserPageSummary } from '@/app/features/user/UserPageSummary'
+import { BasePageLayout } from '@/components/layouts/BasePageLayout'
+import { UserPageSidebar } from '@/features/user/UserPageSidebar'
+import { UserPageSummary } from '@/features/user/UserPageSummary'
 
 const mockUser = {
   name: 'Tom Anderson',

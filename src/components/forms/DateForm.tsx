@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar } from '@/app/features/calendars/Calendar'
+import { Calendar } from '@/features/calendars/Calendar'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { BsCalendar3 } from 'react-icons/bs'

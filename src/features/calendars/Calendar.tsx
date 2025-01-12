@@ -1,6 +1,6 @@
 'use client'
 
-import { getMonthDays } from '@/app/utils/calendar/days-util'
+import { getMonthDays } from '@/utils/calendar/days-util'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
