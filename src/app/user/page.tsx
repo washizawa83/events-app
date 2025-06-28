@@ -24,7 +24,7 @@ const mockUser = {
 const UserPage = () => {
   return (
     <BasePageLayout>
-      <div className="flex h-[calc(100vh-56px)] flex-col lg:flex-row">
+      <div className="h-pageHeight flex flex-col lg:flex-row">
         <div className="w-full lg:w-1/4">
           <UserPageSidebar
             name={mockUser.name}

@@ -29,6 +29,9 @@ export default {
       fontFamily: {
         krona: ['Krona One'],
       },
+      height: {
+        pageHeight: 'calc(100vh - 56px)',
+      },
     },
   },
   plugins: [],

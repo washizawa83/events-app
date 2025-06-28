@@ -70,7 +70,7 @@ const CalendarPage = () => {
 
   return (
     <BasePageLayout>
-      <div className="flex h-[calc(100vh-56px)]">
+      <div className="h-pageHeight flex">
         <div className="flex h-full w-[420px] flex-col bg-valiantDark">
           <div className="h-28 w-full p-2">
             <Button label="イベントを追加" size="s" handleClick={() => {}} />

@@ -43,7 +43,7 @@ const mockEvents = [
 const SearchPage = () => {
   return (
     <BasePageLayout>
-      <div className="flex h-[calc(100vh-56px)] flex-col">
+      <div className="h-pageHeight flex flex-col">
         <EventSearchBox />
         <EventList events={mockEvents} />
       </div>
