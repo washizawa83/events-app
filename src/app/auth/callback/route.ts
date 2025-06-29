@@ -17,12 +17,12 @@ export async function GET(request: NextRequest) {
   cookieStore.delete('oauth_state')
 
   try {
-    const accessTokenResponse = await apiRequest('auth/google', 'POST', {
+    const accessTokenResponse = await apiRequest('/auth/google', 'POST', {
       code,
     })
     await setAccessToken(accessTokenResponse.data.access_token)
 
-    const userResponse = await apiRequest('users/me', 'GET', {}, true)
+    const userResponse = await apiRequest('/users/me', 'GET', {}, true)
     console.log('userResponse', userResponse.data)
 
     return NextResponse.redirect(new URL('/', request.url))
