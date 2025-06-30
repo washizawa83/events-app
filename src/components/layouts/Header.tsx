@@ -1,6 +1,7 @@
 'use client'
 
 import { apiRequest } from '@/services/api/api-service'
+import { getAccessToken } from '@/services/auth/auth-service'
 import { loginUserAtom } from '@/services/jotai/loginUserAtom'
 import { useAtom } from 'jotai'
 import Link from 'next/link'
@@ -14,6 +15,9 @@ export const Header = () => {
 
   useEffect(() => {
     const fetchLoginUser = async () => {
+      const accessToken = getAccessToken()
+      if (!accessToken) return
+
       const userResponse = await apiRequest('/users/me', 'GET', {}, true)
       setLoginUser(userResponse.data)
     }

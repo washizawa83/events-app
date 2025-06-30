@@ -1,5 +1,5 @@
-import { apiRequest } from '@/services/api/api-service'
 import { setAccessToken } from '@/services/auth/auth-service'
+import axios from 'axios'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -17,13 +17,13 @@ export async function GET(request: NextRequest) {
   cookieStore.delete('oauth_state')
 
   try {
-    const accessTokenResponse = await apiRequest('/auth/google', 'POST', {
-      code,
-    })
+    const accessTokenResponse = await axios.post(
+      `${process.env.NEXT_PUBLIC_ENDPOINT}/auth/google`,
+      {
+        code,
+      },
+    )
     await setAccessToken(accessTokenResponse.data.access_token)
-
-    const userResponse = await apiRequest('/users/me', 'GET', {}, true)
-    console.log('userResponse', userResponse.data)
 
     return NextResponse.redirect(new URL('/', request.url))
   } catch (error) {

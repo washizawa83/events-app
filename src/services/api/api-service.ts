@@ -1,6 +1,10 @@
+'use client'
+
 import { deleteAccessToken, getAccessToken } from '@/services/auth/auth-service'
+import { loginUserAtom } from '@/services/jotai/loginUserAtom'
 import type { paths } from '@/types/api'
 import axios, { AxiosError, AxiosResponse } from 'axios'
+import { createStore } from 'jotai'
 
 // パスからレスポンス型を抽出するユーティリティ型
 type ApiResponse<
@@ -28,6 +32,8 @@ type ValidMethod<TPath extends keyof paths> = {
     : never
 }[ApiMethod]
 
+const store = createStore()
+
 export const apiRequest = async <
   TPath extends keyof paths,
   TMethod extends ValidMethod<TPath>,
@@ -54,7 +60,8 @@ export const apiRequest = async <
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status === 401) {
       await deleteAccessToken()
-      throw new Error('Unauthorized')
+      store.set(loginUserAtom, null)
+      throw error
     }
     throw error
   }
