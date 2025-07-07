@@ -3,10 +3,9 @@ import { signIn } from '@/auth'
 type Pros = {
   icon: React.ReactNode
   label: string
-  onClick: () => void
 }
 
-export const AuthIconButton = ({ icon, label, onClick }: Pros) => {
+export const AuthIconButton = ({ icon, label }: Pros) => {
   return (
     <form
       action={async () => {

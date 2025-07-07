@@ -31,19 +31,3 @@ export const redirectAuthorizationEndpoint = async (provider: 'google') => {
 
   redirect(url)
 }
-
-export const getAccessToken = async () => {
-  const cookieStore = await cookies()
-  const accessToken = cookieStore.get('access_token')?.value
-  return accessToken
-}
-
-export const setAccessToken = async (accessToken: string) => {
-  const cookieStore = await cookies()
-  cookieStore.set('access_token', accessToken)
-}
-
-export const deleteAccessToken = async () => {
-  const cookieStore = await cookies()
-  cookieStore.delete('access_token')
-}

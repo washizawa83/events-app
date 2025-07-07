@@ -1,6 +1,5 @@
 import { AuthIconButton } from '@/components/forms/AuthIconButton'
 import { BasePageLayout } from '@/components/layouts/BasePageLayout'
-import { redirectAuthorizationEndpoint } from '@/services/auth/auth-service'
 import { FcGoogle } from 'react-icons/fc'
 
 const LoginPage = () => {
@@ -12,11 +11,7 @@ const LoginPage = () => {
             <h1 className="text-4xl font-bold">Login</h1>
           </div>
           <div className="flex flex-col items-center">
-            <AuthIconButton
-              icon={<FcGoogle />}
-              label="Google"
-              onClick={() => redirectAuthorizationEndpoint('google')}
-            />
+            <AuthIconButton icon={<FcGoogle />} label="Google" />
           </div>
         </div>
       </div>
