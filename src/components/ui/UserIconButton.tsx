@@ -1,10 +1,6 @@
 'use client'
 
-import { deleteAccessToken } from '@/services/auth/auth-service'
-import { loginUserAtom } from '@/services/jotai/loginUserAtom'
-import { useAtom } from 'jotai'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { useState } from 'react'
 
 type Props = {
@@ -14,14 +10,6 @@ type Props = {
 
 export const UserIconButton = ({ userIcon, menuLocation }: Props) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-  const [loginUser, setLoginUser] = useAtom(loginUserAtom)
-
-  const handleLogout = () => {
-    deleteAccessToken()
-    setIsOpenMenu(false)
-    setLoginUser(null)
-    redirect('/login')
-  }
 
   return (
     <div className="relative">
@@ -45,7 +33,7 @@ export const UserIconButton = ({ userIcon, menuLocation }: Props) => {
             <Link
               href={'/'}
               className="block p-2 text-sm hover:bg-gray-300"
-              onClick={handleLogout}
+              onClick={() => {}}
             >
               ログアウト
             </Link>
