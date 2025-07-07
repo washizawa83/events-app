@@ -1,5 +1,3 @@
-'use client'
-
 import { AuthIconButton } from '@/components/forms/AuthIconButton'
 import { BasePageLayout } from '@/components/layouts/BasePageLayout'
 import { redirectAuthorizationEndpoint } from '@/services/auth/auth-service'
