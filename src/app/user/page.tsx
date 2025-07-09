@@ -1,6 +1,8 @@
 import { BasePageLayout } from '@/components/layouts/BasePageLayout'
 import { UserPageSidebar } from '@/features/user/UserPageSidebar'
 import { UserPageSummary } from '@/features/user/UserPageSummary'
+import { getUserProfile } from '@/services/user/user'
+import { redirect } from 'next/navigation'
 
 const mockUser = {
   name: 'Tom Anderson',
@@ -21,17 +23,23 @@ const mockUser = {
   ],
 }
 
-const UserPage = () => {
+const UserPage = async () => {
+  const userProfile = await getUserProfile()
+  if (!userProfile) {
+    redirect('/login')
+  }
+
   return (
     <BasePageLayout>
       <div className="h-pageHeight flex flex-col lg:flex-row">
         <div className="w-full lg:w-1/4">
           <UserPageSidebar
-            name={mockUser.name}
-            id={mockUser.id}
+            name={userProfile.displayName}
+            id={userProfile.personalId}
             subscribe={mockUser.subscribe}
             numberOfEvents={mockUser.numberOfEvents}
-            description={mockUser.description}
+            description={userProfile.description}
+            imageUrl={userProfile.imageUrl}
           />
         </div>
         <div className="w-full flex-1 lg:w-3/4">

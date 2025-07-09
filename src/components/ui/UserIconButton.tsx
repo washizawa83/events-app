@@ -1,5 +1,6 @@
 'use client'
 
+import { logoutUser } from '@/lib/auth'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -30,13 +31,14 @@ export const UserIconButton = ({ userIcon, menuLocation }: Props) => {
             >
               マイページ
             </Link>
-            <Link
-              href={'/'}
-              className="block p-2 text-sm hover:bg-gray-300"
-              onClick={() => {}}
-            >
-              ログアウト
-            </Link>
+            <form action={logoutUser}>
+              <button
+                type="submit"
+                className="block w-full p-2 text-left text-sm hover:bg-gray-300"
+              >
+                ログアウト
+              </button>
+            </form>
           </ul>
         </div>
       )}
