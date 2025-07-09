@@ -1,11 +1,12 @@
-'use client'
-
+import { getUserProfile } from '@/services/user/user'
 import Link from 'next/link'
-import { BsBell, BsCalendar3 } from 'react-icons/bs'
+import { BsBell, BsCalendar3, BsUnlock } from 'react-icons/bs'
 import { NavigationLink } from '../ui/NavigationLink'
 import { UserIconButton } from '../ui/UserIconButton'
 
-export const Header = () => {
+export const Header = async () => {
+  const userProfile = await getUserProfile()
+
   return (
     <header className="hidden h-14 w-screen items-center bg-secondary sm:flex">
       <div className="mx-auto flex w-11/12 items-center justify-between 2xl:w-[1280px]">
@@ -22,15 +23,27 @@ export const Header = () => {
               href="/calendar"
             />
           </li>
-          <li className="ml-10">
-            <NavigationLink icon={<BsBell />} label="通知" href="/" />
-          </li>
-          <li className="ml-10">
-            <UserIconButton
-              userIcon="/images/mock-user-icon.jpg"
-              menuLocation="bottom"
-            />
-          </li>
+          {userProfile ? (
+            <>
+              <li className="ml-10">
+                <NavigationLink icon={<BsBell />} label="通知" href="/" />
+              </li>
+              <li className="ml-10">
+                <UserIconButton
+                  userIcon={userProfile.imageUrl}
+                  menuLocation="bottom"
+                />
+              </li>
+            </>
+          ) : (
+            <li className="ml-10">
+              <NavigationLink
+                icon={<BsUnlock />}
+                label="ログイン"
+                href="/login"
+              />
+            </li>
+          )}
         </ul>
       </div>
     </header>

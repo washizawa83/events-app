@@ -9,6 +9,7 @@ type Props = {
   subscribe: number
   numberOfEvents: number
   description: string
+  imageUrl: string
 }
 
 export const UserPageSidebar = ({
@@ -17,15 +18,19 @@ export const UserPageSidebar = ({
   subscribe,
   numberOfEvents,
   description,
+  imageUrl,
 }: Props) => {
   return (
     <div className="h-full bg-primary">
       <div className="bg-valiantDark p-4">
         <div className="mb-3 flex flex-col items-center justify-center">
-          <div className="h-24 w-24 rounded-full bg-[url('/images/mock-user-icon.jpg')] bg-cover bg-no-repeat"></div>
-          <div>
+          <div
+            className="h-24 w-24 rounded-full bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          ></div>
+          <div className="mt-2">
             <p className="text-sm text-gray-300">id: {id}</p>
-            <p className="text-xl">{name}</p>
+            <p className="mt-2 text-xl">{name}</p>
           </div>
         </div>
         <div className="mb-3 flex flex-wrap items-center justify-around">

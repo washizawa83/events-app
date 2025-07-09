@@ -20,7 +20,7 @@ export default function SetupToken() {
         if (response.ok) {
           setStatus('認証完了')
           // ホームページにリダイレクト
-          router.push('/')
+          router.push('/user')
         } else {
           setStatus('認証エラーが発生しました')
           console.error('Token generation failed')
