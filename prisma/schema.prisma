@@ -34,9 +34,100 @@ model UserProfile {
   imageUrl String @db.VarChar(255)
   description String @db.Text
 
-  userId String @unique
-  user User @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+  ownedEvents Event[] @relation("EventOwner")
+  attendingEvents Event[] @relation("EventAttendees")
 }
 
+model Prefecture {
+  id String @id
+  name String @db.VarChar(255)
+  areas Area[]
+  events Event[]
+  cities City[]
+}
+
+model Area {
+  id String @id
+  name String @db.VarChar(255)
+  prefectureId String
+  cities City[]
+  prefecture Prefecture @relation(fields: [prefectureId], references: [id])
+  events Event[]
+}
+
+model City {
+  id String @id
+  name String @db.VarChar(255)
+  prefectureId String
+  areaId String
+  area Area @relation(fields: [areaId], references: [id])
+  prefecture Prefecture @relation(fields: [prefectureId], references: [id])
+  events Event[]
+}
+
+enum EventType {
+  OFFLINE
+  ONLINE
+  HYBRID
+}
+
+enum EventStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model EventMedia {
+  id String @id @default(uuid())
+  url String @db.VarChar(255)
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model EventTag {
+  id String @id @default(uuid())
+  name String @db.VarChar(255)
+  events Event[]
+}
+
+model Event {
+  id String @id @default(uuid())
+  title String @db.VarChar(255)
+  description String @db.Text
+  startDateTime DateTime
+  endDateTime DateTime
+  locationDetail String @db.VarChar(255)
+  // 参加条件
+  conditions String? @db.VarChar(255)
+  // 参加人数
+  maxCapacity String?
+  // その他・概要
+  overview String? @db.Text
+  // お問い合わせ
+  contact String? @db.VarChar(255)
+
+  eventType EventType @default(OFFLINE)
+  eventStatus EventStatus @default(SCHEDULED)
+
+  ownerId String
+  owner UserProfile @relation("EventOwner", fields: [ownerId], references: [id])
+
+  attendees UserProfile[] @relation("EventAttendees")
+
+  medias EventMedia[]
+  tags EventTag[]
+
+  prefectureId String
+  prefecture Prefecture @relation(fields: [prefectureId], references: [id])
+
+  areaId String
+  area Area @relation(fields: [areaId], references: [id])
+
+  cityId String
+  city City @relation(fields: [cityId], references: [id])
+}
