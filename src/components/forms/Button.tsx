@@ -11,7 +11,7 @@ export const button = tv({
       l: 'px-8 py-3 min-w-40 text-xl',
     },
     color: {
-      success: 'bg-accent hover:bg-accentFocus focus:bg-accentFocus',
+      success: 'bg-accent hover:bg-accentFocus',
       variant: 'bg-valiant',
     },
   },
