@@ -32,6 +32,9 @@ export default {
       height: {
         pageHeight: 'calc(100vh - 56px)',
       },
+      width: {
+        '1/7': '14.2857143%',
+      },
     },
   },
   plugins: [],
