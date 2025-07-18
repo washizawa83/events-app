@@ -1,6 +1,11 @@
 'use client'
 
-import { getMonthDays } from '@/utils/calendar/days-util'
+import {
+  dayOfWeeks,
+  isThisDay,
+  isThisMonth,
+} from '@/utils/calendar/calendar-util'
+import { getCalendarDates } from '@/utils/calendar/days-util'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
@@ -11,8 +16,6 @@ type Props = {
   handleSelectedDay: (day: dayjs.Dayjs) => void
 }
 
-const dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
 export const Calendar = ({
   isFullScreen = false,
   darkMode = false,
@@ -21,7 +24,9 @@ export const Calendar = ({
   const currentDate = dayjs()
   const [selectedDay, setSelectedDay] = useState<dayjs.Dayjs>(currentDate)
   const [selectedMonth, setSelectedMonth] = useState(currentDate)
-  const [monthDays, setMonthDays] = useState(getMonthDays())
+  const [monthDays, setMonthDays] = useState(
+    getCalendarDates(currentDate.year(), currentDate.month() + 1),
+  )
 
   const setMonthDelta = (delta: number) => {
     setSelectedMonth((currentSelectedMonth) =>
@@ -35,16 +40,10 @@ export const Calendar = ({
   }
 
   useEffect(() => {
-    setMonthDays(getMonthDays(selectedMonth))
+    setMonthDays(
+      getCalendarDates(selectedMonth.year(), selectedMonth.month() + 1),
+    )
   }, [selectedMonth])
-
-  const isThisMonth = (day: dayjs.Dayjs): boolean => {
-    return selectedMonth.format('YYYY/MMMM') === day.format('YYYY/MMMM')
-  }
-
-  const isThisDay = (day: dayjs.Dayjs): boolean => {
-    return currentDate.format('YYYY/MMMM/DD') === day.format('YYYY/MMMM/DD')
-  }
 
   return (
     <div
@@ -82,25 +81,23 @@ export const Calendar = ({
             </div>
           ))}
         </div>
-        <div className="h-full">
-          {monthDays.map((week, index) => (
+        <div className="flex h-full flex-wrap">
+          {monthDays.map((day, index) => (
             <div
               key={index}
-              className={`flex h-1/5 items-center border-b last-of-type:border-none ${darkMode ? 'border-primary' : 'border-gray-200'}`}
+              className={`w-1/7 flex h-1/5 items-center border-b last-of-type:border-none ${darkMode ? 'border-primary' : 'border-gray-200'}`}
             >
-              {week.map((day, index) => (
-                <button
-                  className={`flex h-full basis-1/7 cursor-default items-center justify-center border-r py-2 text-center last-of-type:border-none md:p-0 ${darkMode ? 'border-primary bg-valiant hover:bg-[#50505e]' : 'border-gray-200 bg-slate-100 hover:bg-slate-300'} ${!isFullScreen && 'aspect-square'} ${!isThisMonth(day) && (darkMode ? 'bg-valiantDark' : 'bg-slate-200')} ${selectedDay?.format('YYYY/MM/DD') === day.format('YYYY/MM/DD') && 'text-accent'} `}
-                  key={index}
-                  onClick={() => selectDay(day)}
+              <button
+                className={`flex h-full w-full cursor-default items-center justify-center border-r py-2 text-center last-of-type:border-none md:p-0 ${darkMode ? 'border-primary bg-valiant hover:bg-[#50505e]' : 'border-gray-200 bg-slate-100 hover:bg-slate-300'} ${!isFullScreen && 'aspect-square'} ${!isThisMonth(day, selectedMonth) && (darkMode ? 'bg-valiantDark' : 'bg-slate-200')} ${selectedDay?.format('YYYY/MM/DD') === day.format('YYYY/MM/DD') && 'text-accent'} `}
+                key={index}
+                onClick={() => selectDay(day)}
+              >
+                <p
+                  className={`md:text-basic flex h-6 w-6 items-center justify-center text-sm ${isThisDay(day, currentDate) && 'rounded-full border border-accent'}`}
                 >
-                  <p
-                    className={`md:text-basic flex h-6 w-6 items-center justify-center text-sm ${isThisDay(day) && 'rounded-full border border-accent'}`}
-                  >
-                    {day.format('D')}
-                  </p>
-                </button>
-              ))}
+                  {day.format('D')}
+                </p>
+              </button>
             </div>
           ))}
         </div>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useClickOutside } from '@/hooks/useClickOutside'
 import { logoutUser } from '@/lib/auth'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -11,9 +12,10 @@ type Props = {
 
 export const UserIconButton = ({ userIcon, menuLocation }: Props) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
+  const contentRef = useClickOutside<HTMLDivElement>(() => setIsOpenMenu(false))
 
   return (
-    <div className="relative">
+    <div className="relative" ref={contentRef}>
       <button
         style={{ backgroundImage: `url('${userIcon}')` }}
         className={`h-7 w-7 rounded-full bg-cover bg-no-repeat`}
