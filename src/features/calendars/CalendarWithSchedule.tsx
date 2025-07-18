@@ -14,6 +14,8 @@ type Props = {
   darkMode?: boolean
   handleSelectedDay: (day: dayjs.Dayjs) => void
   selectedDay: dayjs.Dayjs
+  selectedDate: dayjs.Dayjs
+  selectedMonth: string
   calendarDates: dayjs.Dayjs[]
   scheduleMap: Record<string, Event[]>
 }
@@ -23,6 +25,8 @@ export const CalendarWithSchedule = ({
   darkMode = false,
   handleSelectedDay,
   selectedDay,
+  selectedDate,
+  selectedMonth,
   calendarDates,
   scheduleMap,
 }: Props) => {
@@ -44,17 +48,17 @@ export const CalendarWithSchedule = ({
       >
         <Link
           className="ml-1 flex h-8 w-8 cursor-default items-center justify-center rounded-full hover:bg-slate-300"
-          href={`/calendar2/${selectedDay.subtract(1, 'month').format('YYYY-MM-DD')}`}
+          href={`/calendar/${selectedDate.subtract(1, 'month').format('YYYY-MM-DD')}`}
         >
           <IoIosArrowBack />
         </Link>
         <div className="mx-auto w-40 text-center">
-          <span className="mx-2">{currentDate.format('YYYY')}</span>
-          <span className="mx-2">{currentDate.format('MMMM')}</span>
+          <span className="mx-2">{selectedDate.format('YYYY')}</span>
+          <span className="mx-2">{selectedDate.format('MMMM')}</span>
         </div>
         <Link
           className="mr-1 flex h-8 w-8 cursor-default items-center justify-center rounded-full hover:bg-slate-300"
-          href={`/calendar2/${selectedDay.add(1, 'month').format('YYYY-MM-DD')}`}
+          href={`/calendar/${selectedDate.add(1, 'month').format('YYYY-MM-DD')}`}
         >
           <IoIosArrowForward />
         </Link>
@@ -93,7 +97,7 @@ export const CalendarWithSchedule = ({
                     ? 'border-primary bg-valiant hover:bg-[#50505e]'
                     : 'border-gray-200 bg-slate-100 hover:bg-slate-300',
                   !isFullScreen && 'aspect-square',
-                  !isThisMonth(day, currentDate) &&
+                  !isThisMonth(day, dayjs(selectedMonth)) &&
                     (darkMode ? 'bg-valiantDark' : 'bg-slate-200'),
                   selectedDay?.format('YYYY/MM/DD') ===
                     day.format('YYYY/MM/DD') && 'text-accent',

@@ -1,6 +1,6 @@
 import { Button } from '@/components/forms/Button'
 import { SelectButtons } from '@/components/forms/SelectButtons'
-import { CalendarScheduleList } from '@/features/calendars/CalendarScheduleList'
+import { CalendarEventList } from '@/features/calendars/CalendarEventList'
 import { CalendarWithSchedule } from '@/features/calendars/CalendarWithSchedule'
 import { scheduleTypes } from '@/features/calendars/mediaLayouts/CalendarContentWrap'
 import { Event } from '@prisma/client'
@@ -8,6 +8,8 @@ import dayjs from 'dayjs'
 
 type Props = {
   selectedDay: dayjs.Dayjs
+  selectedDate: dayjs.Dayjs
+  selectedMonth: string
   displayScheduleType: (typeof scheduleTypes)[number]
   selectedDayEvents: Event[]
   handleSelectDay: (day: dayjs.Dayjs) => void
@@ -17,6 +19,8 @@ type Props = {
 
 export const DesktopCalendar = ({
   selectedDay,
+  selectedDate,
+  selectedMonth,
   displayScheduleType,
   selectedDayEvents,
   handleSelectDay,
@@ -25,7 +29,7 @@ export const DesktopCalendar = ({
 }: Props) => {
   return (
     <div className="flex">
-      <div className="h-pageHeight w-96 flex-col">
+      <div className="h-pageHeight w-96 shrink-0 flex-col">
         <div className="flex h-full w-full flex-col">
           <div className="flex h-12 justify-between bg-primary p-2 md:h-16">
             <div>
@@ -41,7 +45,7 @@ export const DesktopCalendar = ({
             </div>
           </div>
           {displayScheduleType === 'LIST' && (
-            <CalendarScheduleList selectedDayEvents={selectedDayEvents} />
+            <CalendarEventList selectedDayEvents={selectedDayEvents} />
           )}
         </div>
       </div>
@@ -51,6 +55,8 @@ export const DesktopCalendar = ({
           darkMode={true}
           handleSelectedDay={handleSelectDay}
           selectedDay={selectedDay}
+          selectedDate={selectedDate}
+          selectedMonth={selectedMonth}
           calendarDates={calendarDates}
           scheduleMap={scheduleMap}
         />

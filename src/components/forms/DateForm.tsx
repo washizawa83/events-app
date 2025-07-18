@@ -1,6 +1,7 @@
 'use client'
 
 import { Calendar } from '@/features/calendars/Calendar'
+import { useClickOutside } from '@/hooks/useClickOutside'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { BsCalendar3 } from 'react-icons/bs'
@@ -13,9 +14,12 @@ export const DateForm = ({ label }: Props) => {
   const currentDate = dayjs()
   const [value, setValue] = useState(currentDate.format('YYYY/MM/DD'))
   const [isOpenCalendar, setIsOpenCalendar] = useState(false)
+  const contentRef = useClickOutside<HTMLDivElement>(() =>
+    setIsOpenCalendar(false),
+  )
 
   return (
-    <div className="flex flex-col flex-wrap">
+    <div className="flex flex-col flex-wrap" ref={contentRef}>
       <label className="text-sm" htmlFor={label}>
         {label}
       </label>

@@ -1,6 +1,7 @@
 'use client'
 
 import { DesktopCalendar } from '@/features/calendars/mediaLayouts/DesktopCalendar'
+import { MobileCalendar } from '@/features/calendars/mediaLayouts/MobileCalendar'
 import { getCalendarDates } from '@/utils/calendar/days-util'
 import { Event } from '@prisma/client'
 import dayjs from 'dayjs'
@@ -23,6 +24,7 @@ export const CalendarContentWrap = ({ selectedDate, scheduleMap }: Props) => {
   const [selectedDayEvents, setSelectedDayEvents] = useState<Event[]>(
     scheduleMap?.[dayjs(selectedDate).format('YYYY-MM-DD')] || [],
   )
+  const selectedMonth = dayjs(selectedDate).format('YYYY-MM')
 
   const calendarDates = getCalendarDates(
     dayjs(selectedDate).year(),
@@ -36,10 +38,23 @@ export const CalendarContentWrap = ({ selectedDate, scheduleMap }: Props) => {
 
   return (
     <>
-      <div className="sm:hidden"></div>
+      <div className="sm:hidden">
+        <MobileCalendar
+          selectedDay={selectedDay}
+          selectedDate={dayjs(selectedDate)}
+          selectedMonth={selectedMonth}
+          displayScheduleType={displayScheduleType}
+          selectedDayEvents={selectedDayEvents}
+          handleSelectDay={handleSelectDay}
+          calendarDates={calendarDates}
+          scheduleMap={scheduleMap}
+        />
+      </div>
       <div className="hidden sm:block">
         <DesktopCalendar
-          selectedDay={selectedDay}
+          selectedDay={dayjs(selectedDay)}
+          selectedDate={dayjs(selectedDate)}
+          selectedMonth={selectedMonth}
           displayScheduleType={displayScheduleType}
           selectedDayEvents={selectedDayEvents}
           handleSelectDay={handleSelectDay}

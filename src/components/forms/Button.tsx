@@ -11,13 +11,19 @@ export const button = tv({
       l: 'px-8 py-3 min-w-40 text-xl',
     },
     color: {
-      success: 'bg-accent hover:bg-accentFocus',
-      variant: 'bg-valiant',
+      success: 'bg-accent hover:bg-accentFocus border-accent',
+      variant: 'bg-valiant border-valiant',
+    },
+    variant: {
+      text: 'bg-transparent',
+      outlined: 'bg-transparent border',
+      contained: '',
     },
   },
   defaultVariants: {
     size: 's',
     color: 'success',
+    variant: 'contained',
   },
 })
 

@@ -20,7 +20,7 @@ export const Header = async () => {
             <NavigationLink
               icon={<BsCalendar3 />}
               label="カレンダー"
-              href="/calendar2"
+              href="/calendar"
             />
           </li>
           {userProfile ? (

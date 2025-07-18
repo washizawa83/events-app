@@ -6,7 +6,7 @@ type Props = {
   selectedDayEvents: Event[]
 }
 
-export const CalendarScheduleList = ({ selectedDayEvents }: Props) => {
+export const CalendarEventList = ({ selectedDayEvents }: Props) => {
   return (
     <ul className="flex-1 overflow-y-auto bg-valiantDark">
       {selectedDayEvents.length === 0 && (
