@@ -32,6 +32,7 @@ export const DateForm = ({ label }: Props) => {
         />
         <div>
           <button
+            type="button"
             className="h-8 rounded-r-lg bg-valiantDark p-2"
             onClick={() => setIsOpenCalendar(!isOpenCalendar)}
           >

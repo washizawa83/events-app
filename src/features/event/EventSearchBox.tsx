@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { BetweenDateTimeForm } from '../../components/forms/BetweenDateTimeForm'
 import { Button } from '../../components/forms/Button'
 import { DateForm } from '../../components/forms/DateForm'
-import { DateTimeForm } from '../../components/forms/DateTimeForm'
 import { LocationForm } from '../../components/forms/LocationForm'
 import { SelectButtons } from '../../components/forms/SelectButtons'
 import { TextForm } from '../../components/forms/TextForm'
@@ -53,7 +53,7 @@ export const EventSearchBox = () => {
               <DateForm label="日程" />
             </div>
             <div className="flex-grow">
-              <DateTimeForm label="日時" />
+              <BetweenDateTimeForm label="日時" />
             </div>
           </div>
         </div>
