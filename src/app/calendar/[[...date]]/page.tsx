@@ -1,6 +1,6 @@
 import { BasePageLayout } from '@/components/layouts/BasePageLayout'
 import { CalendarContentWrap } from '@/features/calendars/mediaLayouts/CalendarContentWrap'
-import { mockEvents } from '@/services/calendar-service/calendar'
+import { mockEvents } from '@/services/calendar/calendar'
 import { generateCalendarSchedule } from '@/utils/calendar/calendar-util'
 import {
   getCalendarEndDate,

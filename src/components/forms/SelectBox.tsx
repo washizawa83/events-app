@@ -19,13 +19,15 @@ type SelectBoxOption = {
 type Props = {
   label?: string
   options: SelectBoxOption[]
+  name: string
+  errorMessage?: string[]
 }
 
-export const SelectBox = ({ label, options }: Props) => {
+export const SelectBox = ({ label, options, name, errorMessage }: Props) => {
   const [selected, setSelected] = useState<SelectBoxOption | null>(null)
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={setSelected} name={name}>
       <div className="relative w-full">
         <Label className="text-sm text-gray-900">{label}</Label>
         <ListboxButton className="grid h-8 w-full cursor-default grid-cols-1 rounded-lg bg-white py-1.5 pl-3 pr-2 text-left text-gray-900 sm:text-sm/6">
@@ -61,6 +63,7 @@ export const SelectBox = ({ label, options }: Props) => {
           ))}
         </ListboxOptions>
       </div>
+      <div className="text-sm text-red-500">{errorMessage}</div>
     </Listbox>
   )
 }

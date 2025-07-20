@@ -1,6 +1,6 @@
 import { tv, VariantProps } from 'tailwind-variants'
 
-type ButtonVariants = VariantProps<typeof button>
+export type ButtonVariants = VariantProps<typeof button>
 
 export const button = tv({
   base: 'px-4 py-1 min-w-20 text-base rounded',

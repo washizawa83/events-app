@@ -5,9 +5,15 @@ type Props = {
     label: string
     value: string
   }[]
+  errorMessage?: string[]
 }
 
-export const RadioButtonGroup = ({ label, name, items }: Props) => {
+export const RadioButtonGroup = ({
+  label,
+  name,
+  items,
+  errorMessage,
+}: Props) => {
   return (
     <div>
       <label className="text-sm">{label}</label>
@@ -25,6 +31,7 @@ export const RadioButtonGroup = ({ label, name, items }: Props) => {
           </div>
         ))}
       </fieldset>
+      <div className="text-sm text-red-500">{errorMessage}</div>
     </div>
   )
 }

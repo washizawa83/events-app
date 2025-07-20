@@ -1,4 +1,5 @@
 import { Button } from '@/components/forms/Button'
+import { LinkButton } from '@/components/forms/LinkButton'
 import { SelectButtons } from '@/components/forms/SelectButtons'
 import { CalendarEventList } from '@/features/calendars/CalendarEventList'
 import { CalendarWithSchedule } from '@/features/calendars/CalendarWithSchedule'
@@ -52,8 +53,9 @@ export const MobileCalendar = ({
             </div>
             <div className="flex h-12 justify-between bg-primary p-2 md:h-16">
               <div>
-                <Button
+                <LinkButton
                   label="イベントを追加"
+                  href="/event/create"
                   size="s"
                   handleClick={() => {}}
                 />

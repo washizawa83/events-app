@@ -1,4 +1,4 @@
-import { Button } from '@/components/forms/Button'
+import { LinkButton } from '@/components/forms/LinkButton'
 import { SelectButtons } from '@/components/forms/SelectButtons'
 import { CalendarEventList } from '@/features/calendars/CalendarEventList'
 import { CalendarWithSchedule } from '@/features/calendars/CalendarWithSchedule'
@@ -33,7 +33,12 @@ export const DesktopCalendar = ({
         <div className="flex h-full w-full flex-col">
           <div className="flex h-12 justify-between bg-primary p-2 md:h-16">
             <div>
-              <Button label="イベントを追加" size="s" handleClick={() => {}} />
+              <LinkButton
+                label="イベントを追加"
+                href="/event/create"
+                size="s"
+                handleClick={() => {}}
+              />
             </div>
             <div>
               <SelectButtons

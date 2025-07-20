@@ -8,9 +8,11 @@ import { BsCalendar3 } from 'react-icons/bs'
 
 type Props = {
   label: string
+  name: string
+  errorMessage?: string[]
 }
 
-export const DateForm = ({ label }: Props) => {
+export const DateForm = ({ label, name, errorMessage }: Props) => {
   const currentDate = dayjs()
   const [value, setValue] = useState(currentDate.format('YYYY/MM/DD'))
   const [isOpenCalendar, setIsOpenCalendar] = useState(false)
@@ -29,6 +31,7 @@ export const DateForm = ({ label }: Props) => {
           type="text"
           defaultValue={value}
           placeholder={currentDate.format('YYYY/MM/DD')}
+          name={name}
         />
         <div>
           <button
@@ -49,6 +52,7 @@ export const DateForm = ({ label }: Props) => {
           )}
         </div>
       </div>
+      <div className="text-sm text-red-500">{errorMessage}</div>
     </div>
   )
 }

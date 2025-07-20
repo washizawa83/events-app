@@ -50,7 +50,7 @@ export const EventSearchBox = () => {
           </div>
           <div className="mb-5 w-full items-center sm:flex lg:w-[48%] lg:justify-end">
             <div className="mb-5 mr-5 sm:mb-0">
-              <DateForm label="日程" />
+              <DateForm label="日程" name="date" />
             </div>
             <div className="flex-grow">
               <BetweenDateTimeForm label="日時" />

@@ -101,7 +101,8 @@ model Event {
   description String @db.Text
   startDateTime DateTime
   endDateTime DateTime
-  locationDetail String @db.VarChar(255)
+  locationDetail String? @db.VarChar(255)
+  onlineLocationDetail String? @db.VarChar(255)
   // 参加条件
   conditions String? @db.VarChar(255)
   // 参加人数

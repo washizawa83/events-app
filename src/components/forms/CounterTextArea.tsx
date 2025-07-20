@@ -7,6 +7,8 @@ type Props = {
   placeholder: string
   maxLength: number
   rows: number
+  name: string
+  errorMessage?: string[]
   handleChange: () => void
 }
 
@@ -15,6 +17,8 @@ export const CounterTextArea = ({
   placeholder,
   maxLength,
   rows,
+  name,
+  errorMessage,
   handleChange,
 }: Props) => {
   const [textCounter, setTextCounter] = useState(0)
@@ -37,14 +41,18 @@ export const CounterTextArea = ({
           placeholder={placeholder}
           onChange={(e) => changeInput(e.target.value)}
           rows={rows}
+          name={name}
         ></textarea>
       </div>
       <div
-        className={`flex items-center justify-end text-sm ${isExcess ? 'text-red-500' : 'text-gray-300'}`}
+        className={`flex items-center justify-between text-sm ${isExcess ? 'text-red-500' : 'text-gray-300'}`}
       >
-        <span>{textCounter}</span>
-        <span>/</span>
-        <span>{maxLength}</span>
+        <div className="text-red-500">{errorMessage}</div>
+        <div className="flex items-center gap-1">
+          <span>{textCounter}</span>
+          <span>/</span>
+          <span>{maxLength}</span>
+        </div>
       </div>
     </div>
   )

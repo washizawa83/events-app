@@ -11,9 +11,9 @@ export const BetweenDateTimeForm = ({ label }: Props) => {
         {label}
       </label>
       <div className="flex items-center">
-        <DateTimeForm />
+        <DateTimeForm name="startDateTime" />
         <span className="mx-2 text-lg">~</span>
-        <DateTimeForm />
+        <DateTimeForm name="endDateTime" />
       </div>
     </div>
   )
