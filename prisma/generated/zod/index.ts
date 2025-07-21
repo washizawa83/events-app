@@ -262,9 +262,9 @@ export const EventSchema = z.object({
   overview: z.string().nullable(),
   contact: z.string().nullable(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().nullable(),
+  areaId: z.string().nullable(),
+  cityId: z.string().nullable(),
 })
 
 export type Event = z.infer<typeof EventSchema>
@@ -277,9 +277,9 @@ export type EventRelations = {
   attendees: UserProfileWithRelations[];
   medias: EventMediaWithRelations[];
   tags: EventTagWithRelations[];
-  prefecture: PrefectureWithRelations;
-  area: AreaWithRelations;
-  city: CityWithRelations;
+  prefecture?: PrefectureWithRelations | null;
+  area?: AreaWithRelations | null;
+  city?: CityWithRelations | null;
 };
 
 export type EventWithRelations = z.infer<typeof EventSchema> & EventRelations
@@ -289,9 +289,9 @@ export const EventWithRelationsSchema: z.ZodType<EventWithRelations> = EventSche
   attendees: z.lazy(() => UserProfileWithRelationsSchema).array(),
   medias: z.lazy(() => EventMediaWithRelationsSchema).array(),
   tags: z.lazy(() => EventTagWithRelationsSchema).array(),
-  prefecture: z.lazy(() => PrefectureWithRelationsSchema),
-  area: z.lazy(() => AreaWithRelationsSchema),
-  city: z.lazy(() => CityWithRelationsSchema),
+  prefecture: z.lazy(() => PrefectureWithRelationsSchema).nullable(),
+  area: z.lazy(() => AreaWithRelationsSchema).nullable(),
+  city: z.lazy(() => CityWithRelationsSchema).nullable(),
 }))
 
 /////////////////////////////////////////
@@ -1011,16 +1011,16 @@ export const EventWhereInputSchema: z.ZodType<Prisma.EventWhereInput> = z.object
   eventType: z.union([ z.lazy(() => EnumEventTypeFilterSchema),z.lazy(() => EventTypeSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EnumEventStatusFilterSchema),z.lazy(() => EventStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  prefectureId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  areaId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  cityId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  prefectureId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  areaId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  cityId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   owner: z.union([ z.lazy(() => UserProfileScalarRelationFilterSchema),z.lazy(() => UserProfileWhereInputSchema) ]).optional(),
   attendees: z.lazy(() => UserProfileListRelationFilterSchema).optional(),
   medias: z.lazy(() => EventMediaListRelationFilterSchema).optional(),
   tags: z.lazy(() => EventTagListRelationFilterSchema).optional(),
-  prefecture: z.union([ z.lazy(() => PrefectureScalarRelationFilterSchema),z.lazy(() => PrefectureWhereInputSchema) ]).optional(),
-  area: z.union([ z.lazy(() => AreaScalarRelationFilterSchema),z.lazy(() => AreaWhereInputSchema) ]).optional(),
-  city: z.union([ z.lazy(() => CityScalarRelationFilterSchema),z.lazy(() => CityWhereInputSchema) ]).optional(),
+  prefecture: z.union([ z.lazy(() => PrefectureNullableScalarRelationFilterSchema),z.lazy(() => PrefectureWhereInputSchema) ]).optional().nullable(),
+  area: z.union([ z.lazy(() => AreaNullableScalarRelationFilterSchema),z.lazy(() => AreaWhereInputSchema) ]).optional().nullable(),
+  city: z.union([ z.lazy(() => CityNullableScalarRelationFilterSchema),z.lazy(() => CityWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const EventOrderByWithRelationInputSchema: z.ZodType<Prisma.EventOrderByWithRelationInput> = z.object({
@@ -1038,9 +1038,9 @@ export const EventOrderByWithRelationInputSchema: z.ZodType<Prisma.EventOrderByW
   eventType: z.lazy(() => SortOrderSchema).optional(),
   eventStatus: z.lazy(() => SortOrderSchema).optional(),
   ownerId: z.lazy(() => SortOrderSchema).optional(),
-  prefectureId: z.lazy(() => SortOrderSchema).optional(),
-  areaId: z.lazy(() => SortOrderSchema).optional(),
-  cityId: z.lazy(() => SortOrderSchema).optional(),
+  prefectureId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  areaId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  cityId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   owner: z.lazy(() => UserProfileOrderByWithRelationInputSchema).optional(),
   attendees: z.lazy(() => UserProfileOrderByRelationAggregateInputSchema).optional(),
   medias: z.lazy(() => EventMediaOrderByRelationAggregateInputSchema).optional(),
@@ -1071,16 +1071,16 @@ export const EventWhereUniqueInputSchema: z.ZodType<Prisma.EventWhereUniqueInput
   eventType: z.union([ z.lazy(() => EnumEventTypeFilterSchema),z.lazy(() => EventTypeSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EnumEventStatusFilterSchema),z.lazy(() => EventStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  prefectureId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  areaId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  cityId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  prefectureId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  areaId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  cityId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   owner: z.union([ z.lazy(() => UserProfileScalarRelationFilterSchema),z.lazy(() => UserProfileWhereInputSchema) ]).optional(),
   attendees: z.lazy(() => UserProfileListRelationFilterSchema).optional(),
   medias: z.lazy(() => EventMediaListRelationFilterSchema).optional(),
   tags: z.lazy(() => EventTagListRelationFilterSchema).optional(),
-  prefecture: z.union([ z.lazy(() => PrefectureScalarRelationFilterSchema),z.lazy(() => PrefectureWhereInputSchema) ]).optional(),
-  area: z.union([ z.lazy(() => AreaScalarRelationFilterSchema),z.lazy(() => AreaWhereInputSchema) ]).optional(),
-  city: z.union([ z.lazy(() => CityScalarRelationFilterSchema),z.lazy(() => CityWhereInputSchema) ]).optional(),
+  prefecture: z.union([ z.lazy(() => PrefectureNullableScalarRelationFilterSchema),z.lazy(() => PrefectureWhereInputSchema) ]).optional().nullable(),
+  area: z.union([ z.lazy(() => AreaNullableScalarRelationFilterSchema),z.lazy(() => AreaWhereInputSchema) ]).optional().nullable(),
+  city: z.union([ z.lazy(() => CityNullableScalarRelationFilterSchema),z.lazy(() => CityWhereInputSchema) ]).optional().nullable(),
 }).strict());
 
 export const EventOrderByWithAggregationInputSchema: z.ZodType<Prisma.EventOrderByWithAggregationInput> = z.object({
@@ -1098,9 +1098,9 @@ export const EventOrderByWithAggregationInputSchema: z.ZodType<Prisma.EventOrder
   eventType: z.lazy(() => SortOrderSchema).optional(),
   eventStatus: z.lazy(() => SortOrderSchema).optional(),
   ownerId: z.lazy(() => SortOrderSchema).optional(),
-  prefectureId: z.lazy(() => SortOrderSchema).optional(),
-  areaId: z.lazy(() => SortOrderSchema).optional(),
-  cityId: z.lazy(() => SortOrderSchema).optional(),
+  prefectureId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  areaId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  cityId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => EventCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => EventMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => EventMinOrderByAggregateInputSchema).optional()
@@ -1124,9 +1124,9 @@ export const EventScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.EventSc
   eventType: z.union([ z.lazy(() => EnumEventTypeWithAggregatesFilterSchema),z.lazy(() => EventTypeSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EnumEventStatusWithAggregatesFilterSchema),z.lazy(() => EventStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  prefectureId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  areaId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  cityId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  prefectureId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  areaId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  cityId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
 export const UserCreateInputSchema: z.ZodType<Prisma.UserCreateInput> = z.object({
@@ -1518,9 +1518,9 @@ export const EventCreateInputSchema: z.ZodType<Prisma.EventCreateInput> = z.obje
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateInputSchema: z.ZodType<Prisma.EventUncheckedCreateInput> = z.object({
@@ -1538,9 +1538,9 @@ export const EventUncheckedCreateInputSchema: z.ZodType<Prisma.EventUncheckedCre
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
@@ -1564,9 +1564,9 @@ export const EventUpdateInputSchema: z.ZodType<Prisma.EventUpdateInput> = z.obje
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateInputSchema: z.ZodType<Prisma.EventUncheckedUpdateInput> = z.object({
@@ -1584,9 +1584,9 @@ export const EventUncheckedUpdateInputSchema: z.ZodType<Prisma.EventUncheckedUpd
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
@@ -1607,9 +1607,9 @@ export const EventCreateManyInputSchema: z.ZodType<Prisma.EventCreateManyInput> 
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string()
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable()
 }).strict();
 
 export const EventUpdateManyMutationInputSchema: z.ZodType<Prisma.EventUpdateManyMutationInput> = z.object({
@@ -1643,9 +1643,9 @@ export const EventUncheckedUpdateManyInputSchema: z.ZodType<Prisma.EventUnchecke
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
@@ -1957,9 +1957,19 @@ export const EventTagListRelationFilterSchema: z.ZodType<Prisma.EventTagListRela
   none: z.lazy(() => EventTagWhereInputSchema).optional()
 }).strict();
 
-export const CityScalarRelationFilterSchema: z.ZodType<Prisma.CityScalarRelationFilter> = z.object({
-  is: z.lazy(() => CityWhereInputSchema).optional(),
-  isNot: z.lazy(() => CityWhereInputSchema).optional()
+export const PrefectureNullableScalarRelationFilterSchema: z.ZodType<Prisma.PrefectureNullableScalarRelationFilter> = z.object({
+  is: z.lazy(() => PrefectureWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => PrefectureWhereInputSchema).optional().nullable()
+}).strict();
+
+export const AreaNullableScalarRelationFilterSchema: z.ZodType<Prisma.AreaNullableScalarRelationFilter> = z.object({
+  is: z.lazy(() => AreaWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => AreaWhereInputSchema).optional().nullable()
+}).strict();
+
+export const CityNullableScalarRelationFilterSchema: z.ZodType<Prisma.CityNullableScalarRelationFilter> = z.object({
+  is: z.lazy(() => CityWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => CityWhereInputSchema).optional().nullable()
 }).strict();
 
 export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z.object({
@@ -2679,26 +2689,32 @@ export const EventTagUpdateManyWithoutEventsNestedInputSchema: z.ZodType<Prisma.
   deleteMany: z.union([ z.lazy(() => EventTagScalarWhereInputSchema),z.lazy(() => EventTagScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
-export const PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema: z.ZodType<Prisma.PrefectureUpdateOneRequiredWithoutEventsNestedInput> = z.object({
+export const PrefectureUpdateOneWithoutEventsNestedInputSchema: z.ZodType<Prisma.PrefectureUpdateOneWithoutEventsNestedInput> = z.object({
   create: z.union([ z.lazy(() => PrefectureCreateWithoutEventsInputSchema),z.lazy(() => PrefectureUncheckedCreateWithoutEventsInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => PrefectureCreateOrConnectWithoutEventsInputSchema).optional(),
   upsert: z.lazy(() => PrefectureUpsertWithoutEventsInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => PrefectureWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => PrefectureWhereInputSchema) ]).optional(),
   connect: z.lazy(() => PrefectureWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => PrefectureUpdateToOneWithWhereWithoutEventsInputSchema),z.lazy(() => PrefectureUpdateWithoutEventsInputSchema),z.lazy(() => PrefectureUncheckedUpdateWithoutEventsInputSchema) ]).optional(),
 }).strict();
 
-export const AreaUpdateOneRequiredWithoutEventsNestedInputSchema: z.ZodType<Prisma.AreaUpdateOneRequiredWithoutEventsNestedInput> = z.object({
+export const AreaUpdateOneWithoutEventsNestedInputSchema: z.ZodType<Prisma.AreaUpdateOneWithoutEventsNestedInput> = z.object({
   create: z.union([ z.lazy(() => AreaCreateWithoutEventsInputSchema),z.lazy(() => AreaUncheckedCreateWithoutEventsInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => AreaCreateOrConnectWithoutEventsInputSchema).optional(),
   upsert: z.lazy(() => AreaUpsertWithoutEventsInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => AreaWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => AreaWhereInputSchema) ]).optional(),
   connect: z.lazy(() => AreaWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => AreaUpdateToOneWithWhereWithoutEventsInputSchema),z.lazy(() => AreaUpdateWithoutEventsInputSchema),z.lazy(() => AreaUncheckedUpdateWithoutEventsInputSchema) ]).optional(),
 }).strict();
 
-export const CityUpdateOneRequiredWithoutEventsNestedInputSchema: z.ZodType<Prisma.CityUpdateOneRequiredWithoutEventsNestedInput> = z.object({
+export const CityUpdateOneWithoutEventsNestedInputSchema: z.ZodType<Prisma.CityUpdateOneWithoutEventsNestedInput> = z.object({
   create: z.union([ z.lazy(() => CityCreateWithoutEventsInputSchema),z.lazy(() => CityUncheckedCreateWithoutEventsInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => CityCreateOrConnectWithoutEventsInputSchema).optional(),
   upsert: z.lazy(() => CityUpsertWithoutEventsInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => CityWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => CityWhereInputSchema) ]).optional(),
   connect: z.lazy(() => CityWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => CityUpdateToOneWithWhereWithoutEventsInputSchema),z.lazy(() => CityUpdateWithoutEventsInputSchema),z.lazy(() => CityUncheckedUpdateWithoutEventsInputSchema) ]).optional(),
 }).strict();
@@ -2988,9 +3004,9 @@ export const EventCreateWithoutOwnerInputSchema: z.ZodType<Prisma.EventCreateWit
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutOwnerInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutOwnerInput> = z.object({
@@ -3007,9 +3023,9 @@ export const EventUncheckedCreateWithoutOwnerInputSchema: z.ZodType<Prisma.Event
   contact: z.string().optional().nullable(),
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
@@ -3042,9 +3058,9 @@ export const EventCreateWithoutAttendeesInputSchema: z.ZodType<Prisma.EventCreat
   owner: z.lazy(() => UserProfileCreateNestedOneWithoutOwnedEventsInputSchema),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutAttendeesInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutAttendeesInput> = z.object({
@@ -3062,9 +3078,9 @@ export const EventUncheckedCreateWithoutAttendeesInputSchema: z.ZodType<Prisma.E
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
 }).strict();
@@ -3135,9 +3151,9 @@ export const EventScalarWhereInputSchema: z.ZodType<Prisma.EventScalarWhereInput
   eventType: z.union([ z.lazy(() => EnumEventTypeFilterSchema),z.lazy(() => EventTypeSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EnumEventStatusFilterSchema),z.lazy(() => EventStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  prefectureId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  areaId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  cityId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  prefectureId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  areaId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  cityId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
 export const EventUpsertWithWhereUniqueWithoutAttendeesInputSchema: z.ZodType<Prisma.EventUpsertWithWhereUniqueWithoutAttendeesInput> = z.object({
@@ -3198,8 +3214,8 @@ export const EventCreateWithoutPrefectureInputSchema: z.ZodType<Prisma.EventCrea
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutPrefectureInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutPrefectureInput> = z.object({
@@ -3217,8 +3233,8 @@ export const EventUncheckedCreateWithoutPrefectureInputSchema: z.ZodType<Prisma.
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
@@ -3386,8 +3402,8 @@ export const EventCreateWithoutAreaInputSchema: z.ZodType<Prisma.EventCreateWith
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutAreaInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutAreaInput> = z.object({
@@ -3405,8 +3421,8 @@ export const EventUncheckedCreateWithoutAreaInputSchema: z.ZodType<Prisma.EventU
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
@@ -3535,8 +3551,8 @@ export const EventCreateWithoutCityInputSchema: z.ZodType<Prisma.EventCreateWith
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutCityInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutCityInput> = z.object({
@@ -3554,8 +3570,8 @@ export const EventUncheckedCreateWithoutCityInputSchema: z.ZodType<Prisma.EventU
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
@@ -3654,9 +3670,9 @@ export const EventCreateWithoutMediasInputSchema: z.ZodType<Prisma.EventCreateWi
   owner: z.lazy(() => UserProfileCreateNestedOneWithoutOwnedEventsInputSchema),
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   tags: z.lazy(() => EventTagCreateNestedManyWithoutEventsInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutMediasInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutMediasInput> = z.object({
@@ -3674,9 +3690,9 @@ export const EventUncheckedCreateWithoutMediasInputSchema: z.ZodType<Prisma.Even
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedCreateNestedManyWithoutEventsInputSchema).optional()
 }).strict();
@@ -3714,9 +3730,9 @@ export const EventUpdateWithoutMediasInputSchema: z.ZodType<Prisma.EventUpdateWi
   owner: z.lazy(() => UserProfileUpdateOneRequiredWithoutOwnedEventsNestedInputSchema).optional(),
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutMediasInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutMediasInput> = z.object({
@@ -3734,9 +3750,9 @@ export const EventUncheckedUpdateWithoutMediasInputSchema: z.ZodType<Prisma.Even
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
 }).strict();
@@ -3758,9 +3774,9 @@ export const EventCreateWithoutTagsInputSchema: z.ZodType<Prisma.EventCreateWith
   owner: z.lazy(() => UserProfileCreateNestedOneWithoutOwnedEventsInputSchema),
   attendees: z.lazy(() => UserProfileCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaCreateNestedManyWithoutEventInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema),
-  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema),
-  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema)
+  prefecture: z.lazy(() => PrefectureCreateNestedOneWithoutEventsInputSchema).optional(),
+  area: z.lazy(() => AreaCreateNestedOneWithoutEventsInputSchema).optional(),
+  city: z.lazy(() => CityCreateNestedOneWithoutEventsInputSchema).optional()
 }).strict();
 
 export const EventUncheckedCreateWithoutTagsInputSchema: z.ZodType<Prisma.EventUncheckedCreateWithoutTagsInput> = z.object({
@@ -3778,9 +3794,9 @@ export const EventUncheckedCreateWithoutTagsInputSchema: z.ZodType<Prisma.EventU
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string(),
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedCreateNestedManyWithoutAttendingEventsInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedCreateNestedManyWithoutEventInputSchema).optional()
 }).strict();
@@ -4159,9 +4175,9 @@ export const EventCreateManyOwnerInputSchema: z.ZodType<Prisma.EventCreateManyOw
   contact: z.string().optional().nullable(),
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
-  prefectureId: z.string(),
-  areaId: z.string(),
-  cityId: z.string()
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable()
 }).strict();
 
 export const EventUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.EventUpdateWithoutOwnerInput> = z.object({
@@ -4181,9 +4197,9 @@ export const EventUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.EventUpdateWit
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutOwnerInput> = z.object({
@@ -4200,9 +4216,9 @@ export const EventUncheckedUpdateWithoutOwnerInputSchema: z.ZodType<Prisma.Event
   contact: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
@@ -4222,9 +4238,9 @@ export const EventUncheckedUpdateManyWithoutOwnerInputSchema: z.ZodType<Prisma.E
   contact: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const EventUpdateWithoutAttendeesInputSchema: z.ZodType<Prisma.EventUpdateWithoutAttendeesInput> = z.object({
@@ -4244,9 +4260,9 @@ export const EventUpdateWithoutAttendeesInputSchema: z.ZodType<Prisma.EventUpdat
   owner: z.lazy(() => UserProfileUpdateOneRequiredWithoutOwnedEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutAttendeesInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutAttendeesInput> = z.object({
@@ -4264,9 +4280,9 @@ export const EventUncheckedUpdateWithoutAttendeesInputSchema: z.ZodType<Prisma.E
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
 }).strict();
@@ -4286,9 +4302,9 @@ export const EventUncheckedUpdateManyWithoutAttendeesInputSchema: z.ZodType<Pris
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AreaCreateManyPrefectureInputSchema: z.ZodType<Prisma.AreaCreateManyPrefectureInput> = z.object({
@@ -4311,8 +4327,8 @@ export const EventCreateManyPrefectureInputSchema: z.ZodType<Prisma.EventCreateM
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  areaId: z.string(),
-  cityId: z.string()
+  areaId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable()
 }).strict();
 
 export const CityCreateManyPrefectureInputSchema: z.ZodType<Prisma.CityCreateManyPrefectureInput> = z.object({
@@ -4358,8 +4374,8 @@ export const EventUpdateWithoutPrefectureInputSchema: z.ZodType<Prisma.EventUpda
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutPrefectureInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutPrefectureInput> = z.object({
@@ -4377,8 +4393,8 @@ export const EventUncheckedUpdateWithoutPrefectureInputSchema: z.ZodType<Prisma.
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
@@ -4399,8 +4415,8 @@ export const EventUncheckedUpdateManyWithoutPrefectureInputSchema: z.ZodType<Pri
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const CityUpdateWithoutPrefectureInputSchema: z.ZodType<Prisma.CityUpdateWithoutPrefectureInput> = z.object({
@@ -4444,8 +4460,8 @@ export const EventCreateManyAreaInputSchema: z.ZodType<Prisma.EventCreateManyAre
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  cityId: z.string()
+  prefectureId: z.string().optional().nullable(),
+  cityId: z.string().optional().nullable()
 }).strict();
 
 export const CityUpdateWithoutAreaInputSchema: z.ZodType<Prisma.CityUpdateWithoutAreaInput> = z.object({
@@ -4486,8 +4502,8 @@ export const EventUpdateWithoutAreaInputSchema: z.ZodType<Prisma.EventUpdateWith
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutAreaInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutAreaInput> = z.object({
@@ -4505,8 +4521,8 @@ export const EventUncheckedUpdateWithoutAreaInputSchema: z.ZodType<Prisma.EventU
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
@@ -4527,8 +4543,8 @@ export const EventUncheckedUpdateManyWithoutAreaInputSchema: z.ZodType<Prisma.Ev
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const EventCreateManyCityInputSchema: z.ZodType<Prisma.EventCreateManyCityInput> = z.object({
@@ -4546,8 +4562,8 @@ export const EventCreateManyCityInputSchema: z.ZodType<Prisma.EventCreateManyCit
   eventType: z.lazy(() => EventTypeSchema).optional(),
   eventStatus: z.lazy(() => EventStatusSchema).optional(),
   ownerId: z.string(),
-  prefectureId: z.string(),
-  areaId: z.string()
+  prefectureId: z.string().optional().nullable(),
+  areaId: z.string().optional().nullable()
 }).strict();
 
 export const EventUpdateWithoutCityInputSchema: z.ZodType<Prisma.EventUpdateWithoutCityInput> = z.object({
@@ -4568,8 +4584,8 @@ export const EventUpdateWithoutCityInputSchema: z.ZodType<Prisma.EventUpdateWith
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUpdateManyWithoutEventsNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutCityInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutCityInput> = z.object({
@@ -4587,8 +4603,8 @@ export const EventUncheckedUpdateWithoutCityInputSchema: z.ZodType<Prisma.EventU
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional(),
   tags: z.lazy(() => EventTagUncheckedUpdateManyWithoutEventsNestedInputSchema).optional()
@@ -4609,8 +4625,8 @@ export const EventUncheckedUpdateManyWithoutCityInputSchema: z.ZodType<Prisma.Ev
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const EventUpdateWithoutTagsInputSchema: z.ZodType<Prisma.EventUpdateWithoutTagsInput> = z.object({
@@ -4630,9 +4646,9 @@ export const EventUpdateWithoutTagsInputSchema: z.ZodType<Prisma.EventUpdateWith
   owner: z.lazy(() => UserProfileUpdateOneRequiredWithoutOwnedEventsNestedInputSchema).optional(),
   attendees: z.lazy(() => UserProfileUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUpdateManyWithoutEventNestedInputSchema).optional(),
-  prefecture: z.lazy(() => PrefectureUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  area: z.lazy(() => AreaUpdateOneRequiredWithoutEventsNestedInputSchema).optional(),
-  city: z.lazy(() => CityUpdateOneRequiredWithoutEventsNestedInputSchema).optional()
+  prefecture: z.lazy(() => PrefectureUpdateOneWithoutEventsNestedInputSchema).optional(),
+  area: z.lazy(() => AreaUpdateOneWithoutEventsNestedInputSchema).optional(),
+  city: z.lazy(() => CityUpdateOneWithoutEventsNestedInputSchema).optional()
 }).strict();
 
 export const EventUncheckedUpdateWithoutTagsInputSchema: z.ZodType<Prisma.EventUncheckedUpdateWithoutTagsInput> = z.object({
@@ -4650,9 +4666,9 @@ export const EventUncheckedUpdateWithoutTagsInputSchema: z.ZodType<Prisma.EventU
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   attendees: z.lazy(() => UserProfileUncheckedUpdateManyWithoutAttendingEventsNestedInputSchema).optional(),
   medias: z.lazy(() => EventMediaUncheckedUpdateManyWithoutEventNestedInputSchema).optional()
 }).strict();
@@ -4672,9 +4688,9 @@ export const EventUncheckedUpdateManyWithoutTagsInputSchema: z.ZodType<Prisma.Ev
   eventType: z.union([ z.lazy(() => EventTypeSchema),z.lazy(() => EnumEventTypeFieldUpdateOperationsInputSchema) ]).optional(),
   eventStatus: z.union([ z.lazy(() => EventStatusSchema),z.lazy(() => EnumEventStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  prefectureId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  areaId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  cityId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  prefectureId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  areaId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  cityId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const EventMediaCreateManyEventInputSchema: z.ZodType<Prisma.EventMediaCreateManyEventInput> = z.object({

@@ -45,7 +45,7 @@ export const EventSearchBox = () => {
               />
             </div>
             <div className="flex-grow">
-              <LocationForm label="場所" />
+              <LocationForm label="場所" prefectures={[]} cities={[]} />
             </div>
           </div>
           <div className="mb-5 w-full items-center sm:flex lg:w-[48%] lg:justify-end">

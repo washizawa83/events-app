@@ -10,11 +10,21 @@ type Props = {
   label: string
   name: string
   errorMessage?: string[]
+  defaultValue?: string
 }
 
-export const DateForm = ({ label, name, errorMessage }: Props) => {
+export const DateForm = ({
+  label,
+  name,
+  errorMessage,
+  defaultValue,
+}: Props) => {
   const currentDate = dayjs()
-  const [value, setValue] = useState(currentDate.format('YYYY/MM/DD'))
+  const [value, setValue] = useState(
+    defaultValue
+      ? dayjs(defaultValue).format('YYYY/MM/DD')
+      : currentDate.format('YYYY/MM/DD'),
+  )
   const [isOpenCalendar, setIsOpenCalendar] = useState(false)
   const contentRef = useClickOutside<HTMLDivElement>(() =>
     setIsOpenCalendar(false),
@@ -42,7 +52,7 @@ export const DateForm = ({ label, name, errorMessage }: Props) => {
             <BsCalendar3 />
           </button>
           {isOpenCalendar && (
-            <div className="absolute left-0 top-10">
+            <div className="absolute left-0 top-10 z-10">
               <Calendar
                 handleSelectedDay={(day) => {
                   setValue(day.format('YYYY/MM/DD'))

@@ -5,14 +5,18 @@ type Props = {
     label: string
     value: string
   }[]
+  defaultChecked?: string
   errorMessage?: string[]
+  handleChange: (value: string) => void
 }
 
 export const RadioButtonGroup = ({
   label,
   name,
   items,
+  defaultChecked,
   errorMessage,
+  handleChange,
 }: Props) => {
   return (
     <div>
@@ -25,7 +29,9 @@ export const RadioButtonGroup = ({
               id={item.value}
               name={name}
               value={item.value}
+              defaultChecked={defaultChecked === item.value}
               className="scale-125 accent-accent"
+              onChange={(e) => handleChange(e.target.value)}
             />
             <label htmlFor={item.value}>{item.label}</label>
           </div>

@@ -1,8 +1,7 @@
-'use server'
-
 import { EventType } from '@prisma/client'
 import z from 'zod'
 
+// バリデーション用のヘルパー関数
 const offlineEventValidation = (data: any): boolean => {
   return (
     data.prefecture &&
@@ -18,35 +17,34 @@ const onlineEventValidation = (data: any): boolean => {
   return data.onlineLocationDetail && data.onlineLocationDetail.length > 0
 }
 
-const createEventSchema = z
+// イベント作成用のバリデーションスキーマ
+export const createEventSchema = z
   .object({
-    eventName: z
+    title: z
       .string()
       .min(1, { message: 'イベント名を入力してください' })
       .max(50, { message: 'イベント名は50文字以内で入力してください' }),
-    eventDescription: z
+    description: z
       .string()
       .min(1, { message: 'イベントの説明を入力してください' })
       .max(1000, { message: 'イベントの説明は1000文字以内で入力してください' }),
-    startDate: z.date(),
+    tags: z
+      .array(z.string())
+      .max(10, { message: 'タグは10個まで入力可能です' })
+      .optional(),
+    startDate: z.string().min(1, { message: '開始日を入力してください' }),
     startDateTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
       message: '時間は "HH:MM" の形式で指定してください（例: 09:30）',
     }),
-    endDate: z.date(),
+    endDate: z.string().min(1, { message: '終了日を入力してください' }),
     endDateTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
       message: '時間は "HH:MM" の形式で指定してください（例: 09:30）',
     }),
     eventType: z.enum([EventType.OFFLINE, EventType.ONLINE, EventType.HYBRID], {
       message: 'イベントの種類を選択してください',
     }),
-    prefecture: z
-      .string()
-      .max(4, { message: '開催地は4文字以内で入力してください' })
-      .optional(),
-    city: z
-      .string()
-      .max(20, { message: '開催地は20文字以内で入力してください' })
-      .optional(),
+    prefecture: z.string().optional(),
+    city: z.string().optional(),
     locationDetail: z
       .string()
       .max(100, { message: '開催地の詳細は100文字以内で入力してください' })
@@ -98,53 +96,59 @@ const createEventSchema = z
       path: ['onlineLocationDetail'],
     },
   )
+  .refine(
+    async (data) => {
+      return data.tags?.every((tag) => tag.length <= 20) ?? true
+    },
+    {
+      message: 'タグは20文字以内で入力してください',
+      path: ['tags'],
+    },
+  )
 
-type createEventActionState = {
-  errorMessage: {
-    eventName?: string[]
-    eventDescription?: string[]
-    startDate?: string[]
-    startDateTime?: string[]
-    endDate?: string[]
-    endDateTime?: string[]
-    eventType?: string[]
-    prefecture?: string[]
-    city?: string[]
-    locationDetail?: string[]
-    onlineLocationDetail?: string[]
-    eventConditions?: string[]
-    maxCapacity?: string[]
-    overview?: string[]
-    contact?: string[]
-  } | null
-}
+// FormDataをパースする関数
+export const parseEventFormData = (formData: FormData) => {
+  const tagsString = formData.get('tags') as string
+  let tags: string[] = []
 
-export const createEventAction = async (
-  prevState: createEventActionState,
-  formData: FormData,
-) => {
-  const validatedFields = await createEventSchema.safeParseAsync({
-    eventName: formData.get('eventName'),
-    eventDescription: formData.get('eventDescription'),
-    startDate: new Date(formData.get('startDate') as string),
+  if (tagsString) {
+    try {
+      tags = JSON.parse(tagsString)
+    } catch (error) {
+      tags = []
+    }
+  }
+
+  return {
+    title: formData.get('title'),
+    description: formData.get('description'),
+    tags: tags,
+    startDate: formData.get('startDate'),
     startDateTime: formData.get('startDateTime'),
-    endDate: new Date(formData.get('endDate') as string),
+    endDate: formData.get('endDate'),
     endDateTime: formData.get('endDateTime'),
     eventType: formData.get('eventType'),
-    prefecture: formData.get('prefecture[label]') ?? '',
-    city: formData.get('city[label]') ?? '',
-    locationDetail: formData.get('locationDetail'),
-    onlineLocationDetail: formData.get('onlineLocationDetail'),
+    prefecture: formData.get('prefecture[id]') ?? '',
+    city: formData.get('city[id]') ?? '',
+    locationDetail: formData.get('locationDetail') ?? '',
+    onlineLocationDetail: formData.get('onlineLocationDetail') ?? '',
     eventConditions: formData.get('eventConditions'),
     maxCapacity: formData.get('maxCapacity'),
     overview: formData.get('overview'),
     contact: formData.get('contact'),
-  })
-
-  if (validatedFields.error) {
-    const errorMessages = validatedFields.error.flatten().fieldErrors
-    return { errorMessage: errorMessages }
   }
+}
 
-  return { errorMessage: null }
+// バリデーション結果の型
+export type CreateEventValidationResult = z.SafeParseReturnType<
+  z.infer<typeof createEventSchema>,
+  z.infer<typeof createEventSchema>
+>
+
+// FormDataをバリデーションする関数
+export const validateEventFormData = async (
+  formData: FormData,
+): Promise<CreateEventValidationResult> => {
+  const parsedData = parseEventFormData(formData)
+  return await createEventSchema.safeParseAsync(parsedData)
 }

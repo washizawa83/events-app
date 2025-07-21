@@ -1,0 +1,108 @@
+import { prisma } from '@/lib/prisma'
+import { EventType } from '@prisma/client'
+import dayjs from 'dayjs'
+
+// タグ関連のサービス
+export const findOrCreateEventTag = async (tagName: string) => {
+  // 既存のタグを検索
+  let existingTag = await prisma.eventTag.findFirst({
+    where: { name: tagName },
+  })
+
+  // 存在しない場合は作成
+  if (!existingTag) {
+    existingTag = await prisma.eventTag.create({
+      data: { name: tagName },
+    })
+  }
+
+  return existingTag
+}
+
+export const createEventTags = async (tagNames: string[]) => {
+  const tagIds: string[] = []
+
+  for (const tagName of tagNames) {
+    const tag = await findOrCreateEventTag(tagName)
+    tagIds.push(tag.id)
+  }
+
+  return tagIds
+}
+
+// イベント作成用の型定義
+export type CreateEventData = {
+  title: string
+  description: string
+  tags?: string[]
+  startDate: string
+  startDateTime: string
+  endDate: string
+  endDateTime: string
+  eventType: EventType
+  prefecture?: string
+  city?: string
+  locationDetail?: string
+  onlineLocationDetail?: string
+  eventConditions?: string
+  maxCapacity?: string
+  overview?: string
+  contact?: string
+}
+
+// イベント作成サービス
+export const createEvent = async (
+  eventData: CreateEventData,
+  ownerId: string,
+  prefectureId?: string | null,
+  cityId?: string | null,
+  areaId?: string | null,
+): Promise<{ success: boolean; errorMessage?: string }> => {
+  try {
+    // 日時の作成
+    const startDateTime = dayjs(
+      eventData.startDate + ' ' + eventData.startDateTime,
+    ).toDate()
+    const endDateTime = dayjs(
+      eventData.endDate + ' ' + eventData.endDateTime,
+    ).toDate()
+
+    // タグの処理
+    let tagIds: string[] = []
+    if (eventData.tags && eventData.tags.length > 0) {
+      tagIds = await createEventTags(eventData.tags)
+    }
+
+    // イベント作成
+    await prisma.event.create({
+      data: {
+        title: eventData.title,
+        description: eventData.description,
+        startDateTime: startDateTime,
+        endDateTime: endDateTime,
+        locationDetail: eventData.locationDetail ?? null,
+        onlineLocationDetail: eventData.onlineLocationDetail ?? null,
+        conditions: eventData.eventConditions ?? null,
+        maxCapacity: eventData.maxCapacity ?? null,
+        overview: eventData.overview ?? null,
+        contact: eventData.contact ?? null,
+        eventType: eventData.eventType,
+        prefectureId: prefectureId,
+        areaId: areaId,
+        cityId: cityId,
+        ownerId: ownerId,
+        tags:
+          tagIds.length > 0
+            ? {
+                connect: tagIds.map((id) => ({ id })),
+              }
+            : undefined,
+      },
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error('Event creation error:', error)
+    return { success: false, errorMessage: 'イベントの作成に失敗しました' }
+  }
+}

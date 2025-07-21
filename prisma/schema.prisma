@@ -123,12 +123,12 @@ model Event {
   medias EventMedia[]
   tags EventTag[]
 
-  prefectureId String
-  prefecture Prefecture @relation(fields: [prefectureId], references: [id])
+  prefectureId String?
+  prefecture Prefecture? @relation(fields: [prefectureId], references: [id])
 
-  areaId String
-  area Area @relation(fields: [areaId], references: [id])
+  areaId String?
+  area Area? @relation(fields: [areaId], references: [id])
 
-  cityId String
-  city City @relation(fields: [cityId], references: [id])
+  cityId String?
+  city City? @relation(fields: [cityId], references: [id])
 }
