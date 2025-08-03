@@ -1,15 +1,8 @@
+import { EventWithBasicRelations } from '@/services/event'
 import { EventListItem } from './EventListItem'
 
-export type Event = {
-  title: string
-  description: string
-  address: string
-  schedule: string
-  tags: string[]
-}
-
 type Props = {
-  events?: Event[]
+  events?: EventWithBasicRelations[]
 }
 
 export const EventList = ({ events }: Props) => {
@@ -18,14 +11,7 @@ export const EventList = ({ events }: Props) => {
       <ul className="mx-auto w-11/12 py-5">
         {events ? (
           events.map((event, index) => (
-            <EventListItem
-              key={index}
-              title={event.title}
-              description={event.description}
-              address={event.address}
-              schedule={event.schedule}
-              tags={event.tags}
-            />
+            <EventListItem key={index} event={event} />
           ))
         ) : (
           <div className="text-center">

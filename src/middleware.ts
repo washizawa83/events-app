@@ -2,7 +2,7 @@ import { verifyCustomJWT } from '@/utils/jwt'
 import { NextRequest, NextResponse } from 'next/server'
 
 // 認証が必要なパス
-const protectedPaths = ['/user', '/calendar']
+const protectedPaths = ['/user', '/calendar', '/event/create']
 
 // 認証不要なパス（ログイン済みユーザーがアクセスできないパス）
 const authPaths = ['/login', '/auth/setup-token']

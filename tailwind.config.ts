@@ -18,6 +18,7 @@ export default {
         secondary: '#33333D',
         accent: '#20B980',
         accentFocus: '#2bd696',
+        disabled: '#848489',
       },
       flexBasis: {
         '1/7': '14.2857143%',

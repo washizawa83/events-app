@@ -1,7 +1,7 @@
-import { EventStatus, EventType } from '@prisma/client'
+import { Event, EventStatus, EventType } from '@prisma/client'
 import dayjs from 'dayjs'
 
-export const mockEvents = [
+export const mockEvents: Event[] = [
   {
     id: '00',
     title: 'ジャパンカップ',
@@ -9,6 +9,7 @@ export const mockEvents = [
     startDateTime: dayjs().hour(10).minute(0).toDate(),
     endDateTime: dayjs().hour(14).minute(30).toDate(),
     locationDetail: '鈴鹿市 鈴鹿サーキット',
+    onlineLocationDetail: null,
     prefectureId: '00',
     areaId: '00',
     cityId: '00',
@@ -27,6 +28,7 @@ export const mockEvents = [
     startDateTime: dayjs().hour(9).minute(0).toDate(),
     endDateTime: dayjs().hour(17).minute(0).toDate(),
     locationDetail: '渋谷区 渋谷ヒカリエ',
+    onlineLocationDetail: 'Zoom',
     prefectureId: '13',
     areaId: '13',
     cityId: '13',
@@ -44,7 +46,8 @@ export const mockEvents = [
     description: 'ビジネス英語スキルアップセミナー',
     startDateTime: dayjs().hour(19).minute(0).toDate(),
     endDateTime: dayjs().hour(21).minute(0).toDate(),
-    locationDetail: 'Zoomオンライン',
+    locationDetail: null,
+    onlineLocationDetail: 'Zoom',
     prefectureId: '00',
     areaId: '00',
     cityId: '00',
@@ -63,6 +66,7 @@ export const mockEvents = [
     startDateTime: dayjs().hour(11).minute(0).toDate(),
     endDateTime: dayjs().hour(20).minute(0).toDate(),
     locationDetail: '大阪市 大阪城公園',
+    onlineLocationDetail: null,
     prefectureId: '27',
     areaId: '27',
     cityId: '27',
@@ -81,6 +85,7 @@ export const mockEvents = [
     startDateTime: dayjs().hour(8).minute(0).toDate(),
     endDateTime: dayjs().hour(10).minute(0).toDate(),
     locationDetail: '横浜市 赤レンガ倉庫',
+    onlineLocationDetail: null,
     prefectureId: '14',
     areaId: '14',
     cityId: '14',
@@ -99,6 +104,7 @@ export const mockEvents = [
     startDateTime: dayjs().add(-1, 'day').hour(14).minute(0).toDate(),
     endDateTime: dayjs().hour(18).minute(0).toDate(),
     locationDetail: '名古屋市 ナディアパーク',
+    onlineLocationDetail: null,
     prefectureId: '23',
     areaId: '23',
     cityId: '23',
@@ -118,6 +124,7 @@ export const mockEvents = [
     startDateTime: dayjs().hour(14).minute(0).toDate(),
     endDateTime: dayjs().add(1, 'day').hour(18).minute(0).toDate(),
     locationDetail: '名古屋市 ナディアパーク',
+    onlineLocationDetail: null,
     prefectureId: '23',
     areaId: '23',
     cityId: '23',
@@ -142,6 +149,7 @@ export const mockEvents = [
       .minute(0)
       .toDate(),
     locationDetail: '名古屋市 ナディアパーク',
+    onlineLocationDetail: null,
     prefectureId: '23',
     areaId: '23',
     cityId: '23',

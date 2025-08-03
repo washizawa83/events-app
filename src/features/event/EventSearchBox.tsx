@@ -1,12 +1,12 @@
 'use client'
 
+import { Button } from '@/components/forms/buttons/Button'
+import { SelectButtons } from '@/components/forms/buttons/SelectButtons'
+import { BetweenDateTimeForm } from '@/components/forms/dates/BetweenDateTimeForm'
+import { DateForm } from '@/components/forms/dates/DateForm'
+import { LocationForm } from '@/components/forms/LocationForm'
+import { TextForm } from '@/components/forms/text-fields/TextForm'
 import { useState } from 'react'
-import { Button } from '../../components/forms/Button'
-import { DateForm } from '../../components/forms/DateForm'
-import { DateTimeForm } from '../../components/forms/DateTimeForm'
-import { LocationForm } from '../../components/forms/LocationForm'
-import { SelectButtons } from '../../components/forms/SelectButtons'
-import { TextForm } from '../../components/forms/TextForm'
 
 const eventTypes = ['オフライン', 'オンライン']
 
@@ -45,15 +45,15 @@ export const EventSearchBox = () => {
               />
             </div>
             <div className="flex-grow">
-              <LocationForm label="場所" />
+              <LocationForm label="場所" prefectures={[]} cities={[]} />
             </div>
           </div>
           <div className="mb-5 w-full items-center sm:flex lg:w-[48%] lg:justify-end">
             <div className="mb-5 mr-5 sm:mb-0">
-              <DateForm label="日程" />
+              <DateForm label="日程" name="date" />
             </div>
             <div className="flex-grow">
-              <DateTimeForm label="日時" />
+              <BetweenDateTimeForm label="日時" />
             </div>
           </div>
         </div>

@@ -27,7 +27,7 @@ export const SelectButtons = ({
       <label className="text-sm" htmlFor="">
         {label}
       </label>
-      <div>
+      <div className="flex">
         {buttonLabels.map((label, index) => (
           <button
             key={index}

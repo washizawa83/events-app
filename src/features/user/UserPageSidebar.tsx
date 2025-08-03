@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/forms/Button'
+import { Button } from '@/components/forms/buttons/Button'
 import { Counter } from '@/components/ui/Counter'
 
 type Props = {

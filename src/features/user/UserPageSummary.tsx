@@ -1,12 +1,13 @@
 'use client'
 
-import { Button } from '@/components/forms/Button'
-import { SelectButtons } from '@/components/forms/SelectButtons'
+import { LinkButton } from '@/components/forms/buttons/LinkButton'
+import { SelectButtons } from '@/components/forms/buttons/SelectButtons'
+import { EventWithBasicRelations } from '@/services/event'
 import { Calendar } from '../calendars/Calendar'
-import { Event, EventList } from '../event/EventList'
+import { EventList } from '../event/EventList'
 
 type Props = {
-  events?: Event[]
+  events?: EventWithBasicRelations[]
 }
 
 export const UserPageSummary = ({ events }: Props) => {
@@ -25,7 +26,12 @@ export const UserPageSummary = ({ events }: Props) => {
       </div>
       <div className="mb-5 md:w-2/5 md:px-4">
         <div className="mb-10 flex justify-end">
-          <Button label="イベントを追加" size="s" handleClick={() => {}} />
+          <LinkButton
+            label="イベントを追加"
+            href="/event/create"
+            size="s"
+            handleClick={() => {}}
+          />
         </div>
         <Calendar handleSelectedDay={() => {}} />
       </div>

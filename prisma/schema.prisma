@@ -101,7 +101,8 @@ model Event {
   description String @db.Text
   startDateTime DateTime
   endDateTime DateTime
-  locationDetail String @db.VarChar(255)
+  locationDetail String? @db.VarChar(255)
+  onlineLocationDetail String? @db.VarChar(255)
   // 参加条件
   conditions String? @db.VarChar(255)
   // 参加人数
@@ -114,6 +115,8 @@ model Event {
   eventType EventType @default(OFFLINE)
   eventStatus EventStatus @default(SCHEDULED)
 
+  isPublic Boolean @default(false)
+
   ownerId String
   owner UserProfile @relation("EventOwner", fields: [ownerId], references: [id])
 
@@ -122,12 +125,12 @@ model Event {
   medias EventMedia[]
   tags EventTag[]
 
-  prefectureId String
-  prefecture Prefecture @relation(fields: [prefectureId], references: [id])
+  prefectureId String?
+  prefecture Prefecture? @relation(fields: [prefectureId], references: [id])
 
-  areaId String
-  area Area @relation(fields: [areaId], references: [id])
+  areaId String?
+  area Area? @relation(fields: [areaId], references: [id])
 
-  cityId String
-  city City @relation(fields: [cityId], references: [id])
+  cityId String?
+  city City? @relation(fields: [cityId], references: [id])
 }

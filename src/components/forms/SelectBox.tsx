@@ -9,28 +9,67 @@ import {
 } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/16/solid'
 import { CheckIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type SelectBoxOption = {
-  label: string
-  value: string
+  [key: string]: string
 }
 
 type Props = {
   label?: string
+  placeholder?: string
   options: SelectBoxOption[]
+  optionLabelName: string
+  optionValueName: string
+  name: string
+  errorMessage?: string[]
+  disabled?: boolean
+  handleSelect?: (option: SelectBoxOption) => void
+  resetKey?: string
 }
 
-export const SelectBox = ({ label, options }: Props) => {
+export const SelectBox = ({
+  label,
+  placeholder,
+  options,
+  optionLabelName,
+  optionValueName,
+  name,
+  errorMessage,
+  disabled = false,
+  handleSelect,
+  resetKey,
+}: Props) => {
   const [selected, setSelected] = useState<SelectBoxOption | null>(null)
 
+  // resetKeyが変更されたときに選択をリセット
+  useEffect(() => {
+    setSelected(null)
+  }, [resetKey])
+
+  const handleChange = (option: SelectBoxOption) => {
+    setSelected(option)
+    handleSelect?.(option)
+  }
+
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox
+      value={selected}
+      onChange={handleChange}
+      name={name}
+      disabled={disabled}
+    >
       <div className="relative w-full">
         <Label className="text-sm text-gray-900">{label}</Label>
-        <ListboxButton className="grid h-8 w-full cursor-default grid-cols-1 rounded-lg bg-white py-1.5 pl-3 pr-2 text-left text-gray-900 sm:text-sm/6">
+        <ListboxButton
+          className={`grid h-8 w-full cursor-default grid-cols-1 rounded-lg py-1.5 pl-3 pr-2 text-left text-gray-900 sm:text-sm/6 ${
+            disabled ? 'bg-disabled' : 'bg-white'
+          }`}
+        >
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-            <span className="block truncate">{selected?.label}</span>
+            <span className="block truncate">
+              {selected?.[optionLabelName] || placeholder}
+            </span>
           </span>
           <ChevronUpDownIcon
             aria-hidden="true"
@@ -44,13 +83,13 @@ export const SelectBox = ({ label, options }: Props) => {
         >
           {options.map((option) => (
             <ListboxOption
-              key={option.value}
+              key={option[optionValueName]}
               value={option}
               className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-gray-300 data-[focus]:outline-none"
             >
               <div className="flex items-center">
                 <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">
-                  {option.label}
+                  {option[optionLabelName]}
                 </span>
               </div>
 
@@ -61,6 +100,7 @@ export const SelectBox = ({ label, options }: Props) => {
           ))}
         </ListboxOptions>
       </div>
+      <div className="text-sm text-red-500">{errorMessage}</div>
     </Listbox>
   )
 }

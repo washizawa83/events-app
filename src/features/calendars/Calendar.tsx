@@ -54,6 +54,7 @@ export const Calendar = ({
       >
         <button
           className="ml-1 flex h-8 w-8 cursor-default items-center justify-center rounded-full hover:bg-slate-300"
+          type="button"
           onClick={() => setMonthDelta(-1)}
         >
           <IoIosArrowBack />
@@ -64,6 +65,7 @@ export const Calendar = ({
         </div>
         <button
           className="mr-1 flex h-8 w-8 cursor-default items-center justify-center rounded-full hover:bg-slate-300"
+          type="button"
           onClick={() => setMonthDelta(1)}
         >
           <IoIosArrowForward />
@@ -85,12 +87,13 @@ export const Calendar = ({
           {monthDays.map((day, index) => (
             <div
               key={index}
-              className={`w-1/7 flex h-1/5 items-center border-b last-of-type:border-none ${darkMode ? 'border-primary' : 'border-gray-200'}`}
+              className={`flex h-1/5 w-1/7 items-center border-b last-of-type:border-none ${darkMode ? 'border-primary' : 'border-gray-200'}`}
             >
               <button
                 className={`flex h-full w-full cursor-default items-center justify-center border-r py-2 text-center last-of-type:border-none md:p-0 ${darkMode ? 'border-primary bg-valiant hover:bg-[#50505e]' : 'border-gray-200 bg-slate-100 hover:bg-slate-300'} ${!isFullScreen && 'aspect-square'} ${!isThisMonth(day, selectedMonth) && (darkMode ? 'bg-valiantDark' : 'bg-slate-200')} ${selectedDay?.format('YYYY/MM/DD') === day.format('YYYY/MM/DD') && 'text-accent'} `}
                 key={index}
                 onClick={() => selectDay(day)}
+                type="button"
               >
                 <p
                   className={`md:text-basic flex h-6 w-6 items-center justify-center text-sm ${isThisDay(day, currentDate) && 'rounded-full border border-accent'}`}
