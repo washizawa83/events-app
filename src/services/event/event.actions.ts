@@ -17,6 +17,7 @@ export type CreateEventActionState = {
     title?: string[]
     description?: string[]
     tags?: string[]
+    imageUrls?: string[]
     startDate?: string[]
     startDateTime?: string[]
     endDate?: string[]

@@ -5,16 +5,6 @@ import {
 } from '@aws-sdk/client-s3'
 import dayjs from 'dayjs'
 
-// 環境変数のデバッグログ
-console.log('AWS Environment Variables:', {
-  AWS_REGION: process.env.AWS_REGION,
-  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ? '[SET]' : '[NOT SET]',
-  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
-    ? '[SET]'
-    : '[NOT SET]',
-  S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
-})
-
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
@@ -89,12 +79,8 @@ export const uploadImage = async (file: File, fileName: string) => {
       ContentType: contentType,
       CacheControl: 'max-age=31536000', // 1年キャッシュ
     })
-    console.log('S3 Upload - Bucket:', process.env.S3_BUCKET_NAME)
-    console.log('S3 Upload - Key:', key)
-    console.log('S3 Upload - Content-Type:', contentType)
     return await s3Client.send(command).then(() => {
       const url = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`
-      console.log('S3 Upload - Generated URL:', url)
       return url
     })
   } catch (error) {
@@ -104,14 +90,12 @@ export const uploadImage = async (file: File, fileName: string) => {
 }
 
 export const deleteImage = async (key: string) => {
-  console.log('S3 Delete - Key:', key)
   const command = new DeleteObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
     Key: key,
   })
   try {
     await s3Client.send(command)
-    console.log('S3 Delete - Success')
   } catch (error) {
     console.error('Error deleting file:', error)
     throw error

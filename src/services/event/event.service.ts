@@ -40,6 +40,7 @@ export type CreateEventData = {
   title: string
   description: string
   tags?: string[]
+  imageUrls?: string[]
   startDate: string
   startDateTime: string
   endDate: string
@@ -72,40 +73,57 @@ export const createEvent = async (
       eventData.endDate + ' ' + eventData.endDateTime,
     ).toDate()
 
-    // タグの処理
+    // タグの処理（先に作成）
     let tagIds: string[] = []
     if (eventData.tags && eventData.tags.length > 0) {
       tagIds = await createEventTags(eventData.tags)
     }
 
-    // イベント作成
-    const event = await prisma.event.create({
-      data: {
-        title: eventData.title,
-        description: eventData.description,
-        startDateTime: startDateTime,
-        endDateTime: endDateTime,
-        locationDetail: eventData.locationDetail ?? null,
-        onlineLocationDetail: eventData.onlineLocationDetail ?? null,
-        conditions: eventData.eventConditions ?? null,
-        maxCapacity: eventData.maxCapacity ?? null,
-        overview: eventData.overview ?? null,
-        contact: eventData.contact ?? null,
-        eventType: eventData.eventType,
-        prefectureId: prefectureId,
-        areaId: areaId,
-        cityId: cityId,
-        ownerId: ownerId,
-        tags:
-          tagIds.length > 0
-            ? {
-                connect: tagIds.map((id) => ({ id })),
-              }
-            : undefined,
-      },
+    // トランザクションでEventとEventMediaを同時に作成
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Eventを作成
+      const event = await tx.event.create({
+        data: {
+          title: eventData.title,
+          description: eventData.description,
+          startDateTime: startDateTime,
+          endDateTime: endDateTime,
+          locationDetail: eventData.locationDetail ?? null,
+          onlineLocationDetail: eventData.onlineLocationDetail ?? null,
+          conditions: eventData.eventConditions ?? null,
+          maxCapacity: eventData.maxCapacity ?? null,
+          overview: eventData.overview ?? null,
+          contact: eventData.contact ?? null,
+          eventType: eventData.eventType,
+          prefectureId: prefectureId,
+          areaId: areaId,
+          cityId: cityId,
+          ownerId: ownerId,
+          tags:
+            tagIds.length > 0
+              ? {
+                  connect: tagIds.map((id) => ({ id })),
+                }
+              : undefined,
+        },
+      })
+
+      // 2. EventMediaを作成（EventのIDを使用）
+      if (eventData.imageUrls && eventData.imageUrls.length > 0) {
+        const mediaData = eventData.imageUrls.map((url) => ({
+          url: url,
+          eventId: event.id,
+        }))
+
+        await tx.eventMedia.createMany({
+          data: mediaData,
+        })
+      }
+
+      return event
     })
 
-    return { success: true, eventId: event.id }
+    return { success: true, eventId: result.id }
   } catch (error) {
     console.error('Event creation error:', error)
     return { success: false, errorMessage: 'イベントの作成に失敗しました' }
@@ -131,7 +149,7 @@ export const getEvent = async (
   return event
 }
 
-// イベント一覧取得（基本リレーション）
+// イベント一覧取得（基本リレーション + メディア）
 export const getEvents = async (): Promise<EventWithBasicRelations[]> => {
   const events = await prisma.event.findMany({
     include: {
@@ -139,6 +157,7 @@ export const getEvents = async (): Promise<EventWithBasicRelations[]> => {
       prefecture: true,
       area: true,
       city: true,
+      medias: true,
     },
   })
   return events
@@ -155,6 +174,7 @@ export const getEventsByOwner = async (
       prefecture: true,
       area: true,
       city: true,
+      medias: true,
     },
     orderBy: { startDateTime: 'desc' },
   })

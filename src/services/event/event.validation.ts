@@ -32,6 +32,10 @@ export const createEventSchema = z
       .array(z.string())
       .max(10, { message: 'タグは10個まで入力可能です' })
       .optional(),
+    imageUrls: z
+      .array(z.string())
+      .max(5, { message: '画像は5枚までアップロード可能です' })
+      .optional(),
     startDate: z.string().min(1, { message: '開始日を入力してください' }),
     startDateTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
       message: '時間は "HH:MM" の形式で指定してください（例: 09:30）',
@@ -119,10 +123,21 @@ export const parseEventFormData = (formData: FormData) => {
     }
   }
 
+  const imageUrlsString = formData.get('imageUrls') as string
+  let imageUrls: string[] = []
+  if (imageUrlsString) {
+    try {
+      imageUrls = JSON.parse(imageUrlsString)
+    } catch (error) {
+      imageUrls = []
+    }
+  }
+
   return {
     title: formData.get('title'),
     description: formData.get('description'),
     tags: tags,
+    imageUrls: imageUrls,
     startDate: formData.get('startDate'),
     startDateTime: formData.get('startDateTime'),
     endDate: formData.get('endDate'),

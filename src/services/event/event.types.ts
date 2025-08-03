@@ -24,12 +24,13 @@ export type EventWithRelations = Event & {
   medias: EventMedia[]
 }
 
-// getEvents用の型（よく使われるリレーション）
+// getEvents用の型（よく使われるリレーション + メディア）
 export type EventWithBasicRelations = Event & {
   tags: EventTag[]
   prefecture: Prefecture | null
   area: Area | null
   city: City | null
+  medias: EventMedia[]
 }
 
 // getEvent用の型（全てのリレーション含む）

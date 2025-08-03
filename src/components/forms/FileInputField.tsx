@@ -54,6 +54,11 @@ export const FileInputField = () => {
           </p>
         </div>
         <input
+          type="hidden"
+          name="imageUrls"
+          value={JSON.stringify(imageUrls)}
+        />
+        <input
           type="file"
           multiple
           accept="image/*,.svg"
