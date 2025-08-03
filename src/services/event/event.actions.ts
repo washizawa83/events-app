@@ -7,6 +7,7 @@ import {
 } from '@/services/location/cruds/read'
 import { getUserProfile } from '@/services/user/user'
 import { EventType } from '@prisma/client'
+import { redirect } from 'next/navigation'
 import { createEvent } from './event.service'
 import { validateEventFormData } from './event.validation'
 
@@ -98,7 +99,6 @@ export const createEventAction = async (
     validatedFormData.eventType === EventType.OFFLINE ||
     validatedFormData.eventType === EventType.HYBRID
   ) {
-    console.log(prefecture, city, area)
     if (!prefecture || !city || !area) {
       return {
         errorMessage: {
@@ -127,5 +127,5 @@ export const createEventAction = async (
     }
   }
 
-  return { errorMessage: null }
+  return redirect(`/event/detail/${result.eventId}`)
 }

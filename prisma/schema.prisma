@@ -115,6 +115,8 @@ model Event {
   eventType EventType @default(OFFLINE)
   eventStatus EventStatus @default(SCHEDULED)
 
+  isPublic Boolean @default(false)
+
   ownerId String
   owner UserProfile @relation("EventOwner", fields: [ownerId], references: [id])
 

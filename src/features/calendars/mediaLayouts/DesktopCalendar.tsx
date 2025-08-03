@@ -1,5 +1,5 @@
-import { LinkButton } from '@/components/forms/LinkButton'
-import { SelectButtons } from '@/components/forms/SelectButtons'
+import { LinkButton } from '@/components/forms/buttons/LinkButton'
+import { SelectButtons } from '@/components/forms/buttons/SelectButtons'
 import { CalendarEventList } from '@/features/calendars/CalendarEventList'
 import { CalendarWithSchedule } from '@/features/calendars/CalendarWithSchedule'
 import { scheduleTypes } from '@/features/calendars/mediaLayouts/CalendarContentWrap'

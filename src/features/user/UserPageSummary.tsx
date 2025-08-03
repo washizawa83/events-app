@@ -1,12 +1,13 @@
 'use client'
 
-import { LinkButton } from '@/components/forms/LinkButton'
-import { SelectButtons } from '@/components/forms/SelectButtons'
+import { LinkButton } from '@/components/forms/buttons/LinkButton'
+import { SelectButtons } from '@/components/forms/buttons/SelectButtons'
+import { EventWithBasicRelations } from '@/services/event'
 import { Calendar } from '../calendars/Calendar'
-import { Event, EventList } from '../event/EventList'
+import { EventList } from '../event/EventList'
 
 type Props = {
-  events?: Event[]
+  events?: EventWithBasicRelations[]
 }
 
 export const UserPageSummary = ({ events }: Props) => {

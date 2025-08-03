@@ -1,6 +1,11 @@
 import { prisma } from '@/lib/prisma'
 import { EventType } from '@prisma/client'
 import dayjs from 'dayjs'
+import {
+  CreateEventResult,
+  EventWithBasicRelations,
+  EventWithFullRelations,
+} from './event.types'
 
 // タグ関連のサービス
 export const findOrCreateEventTag = async (tagName: string) => {
@@ -57,7 +62,7 @@ export const createEvent = async (
   prefectureId?: string | null,
   cityId?: string | null,
   areaId?: string | null,
-): Promise<{ success: boolean; errorMessage?: string }> => {
+): Promise<CreateEventResult> => {
   try {
     // 日時の作成
     const startDateTime = dayjs(
@@ -74,7 +79,7 @@ export const createEvent = async (
     }
 
     // イベント作成
-    await prisma.event.create({
+    const event = await prisma.event.create({
       data: {
         title: eventData.title,
         description: eventData.description,
@@ -100,9 +105,58 @@ export const createEvent = async (
       },
     })
 
-    return { success: true }
+    return { success: true, eventId: event.id }
   } catch (error) {
     console.error('Event creation error:', error)
     return { success: false, errorMessage: 'イベントの作成に失敗しました' }
   }
+}
+
+// 単一イベント取得（全リレーション含む）
+export const getEvent = async (
+  eventId: string,
+): Promise<EventWithFullRelations | null> => {
+  const event = await prisma.event.findUnique({
+    where: { id: eventId },
+    include: {
+      tags: true,
+      prefecture: true,
+      area: true,
+      city: true,
+      owner: true,
+      attendees: true,
+      medias: true,
+    },
+  })
+  return event
+}
+
+// イベント一覧取得（基本リレーション）
+export const getEvents = async (): Promise<EventWithBasicRelations[]> => {
+  const events = await prisma.event.findMany({
+    include: {
+      tags: true,
+      prefecture: true,
+      area: true,
+      city: true,
+    },
+  })
+  return events
+}
+
+// ユーザーのイベント一覧取得
+export const getEventsByOwner = async (
+  ownerId: string,
+): Promise<EventWithBasicRelations[]> => {
+  const events = await prisma.event.findMany({
+    where: { ownerId },
+    include: {
+      tags: true,
+      prefecture: true,
+      area: true,
+      city: true,
+    },
+    orderBy: { startDateTime: 'desc' },
+  })
+  return events
 }

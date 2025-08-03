@@ -7,6 +7,9 @@ export {
   createEvent,
   createEventTags,
   findOrCreateEventTag,
+  getEvent,
+  getEvents,
+  getEventsByOwner,
 } from './event.service'
 export type { CreateEventData } from './event.service'
 
@@ -17,3 +20,15 @@ export {
   validateEventFormData,
 } from './event.validation'
 export type { CreateEventValidationResult } from './event.validation'
+
+// Types
+export type {
+  BaseEvent,
+  CreateEventResult,
+  EventFilter,
+  EventListOptions,
+  EventWithBasicRelations,
+  EventWithFullRelations,
+  EventWithRelations,
+  UpdateEventData,
+} from './event.types'

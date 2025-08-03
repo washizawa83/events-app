@@ -1,4 +1,4 @@
-import { Button, ButtonVariants } from '@/components/forms/Button'
+import { Button, ButtonVariants } from '@/components/forms/buttons/Button'
 import Link from 'next/link'
 
 type Props = {

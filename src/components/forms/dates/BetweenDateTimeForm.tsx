@@ -1,4 +1,4 @@
-import { DateTimeForm } from '@/components/forms/DateTimeForm'
+import { DateTimeForm } from '@/components/forms/dates/DateTimeForm'
 
 type Props = {
   label: string

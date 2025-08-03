@@ -1,14 +1,14 @@
 'use client'
 
-import { Button } from '@/components/forms/Button'
-import { CounterTextArea } from '@/components/forms/CounterTextArea'
-import { CounterTextField } from '@/components/forms/CounterTextField'
-import { DateForm } from '@/components/forms/DateForm'
-import { DateTimeForm } from '@/components/forms/DateTimeForm'
+import { Button } from '@/components/forms/buttons/Button'
+import { DateForm } from '@/components/forms/dates/DateForm'
+import { DateTimeForm } from '@/components/forms/dates/DateTimeForm'
 import { FileInputField } from '@/components/forms/FileInputField'
 import { LocationForm } from '@/components/forms/LocationForm'
 import { RadioButtonGroup } from '@/components/forms/RadioButtonGroup'
 import { TagInputField } from '@/components/forms/tag-input-form/TagInputField'
+import { CounterTextArea } from '@/components/forms/text-fields/CounterTextArea'
+import { CounterTextField } from '@/components/forms/text-fields/CounterTextField'
 import {
   createEventAction,
   CreateEventActionState,
