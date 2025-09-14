@@ -1,9 +1,9 @@
-import { BasePageLayout } from '@/components/layouts/BasePageLayout'
+import { EventDetailModal } from '@/app/event/search/@modal/(..)detail/[id]/modal'
 import { EventContents } from '@/features/event/event-detail/EventContents'
 import { EventDetailHeader } from '@/features/event/event-detail/EventDetailHeader'
-import { getEvent } from '@/services/event/event.service'
+import { getEvent } from '@/services/event'
 
-export const EventDetailPage = async ({
+export const EventDetailModalPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>
@@ -15,15 +15,15 @@ export const EventDetailPage = async ({
   }
 
   return (
-    <BasePageLayout>
-      <div className="h-pageHeight w-full overflow-y-auto p-4">
+    <EventDetailModal>
+      <div className="h-pageHeight w-full overflow-y-auto text-white">
         <div className="overflow-hidden rounded-md">
           <EventDetailHeader event={event} />
           <EventContents event={event} />
         </div>
       </div>
-    </BasePageLayout>
+    </EventDetailModal>
   )
 }
 
-export default EventDetailPage
+export default EventDetailModalPage

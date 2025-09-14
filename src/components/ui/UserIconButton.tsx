@@ -23,7 +23,7 @@ export const UserIconButton = ({ userIcon, menuLocation }: Props) => {
       ></button>
       {isOpenMenu && (
         <div
-          className={`absolute w-32 overflow-hidden rounded-xl bg-white py-2 ${menuLocation === 'top' ? '-left-10 -top-28' : '-left-20 top-8'}`}
+          className={`absolute z-40 w-32 overflow-hidden rounded-xl bg-white py-2 ${menuLocation === 'top' ? '-left-10 -top-28' : '-left-20 top-8'}`}
         >
           <ul className="text-gray-800">
             <Link

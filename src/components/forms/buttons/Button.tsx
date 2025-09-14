@@ -30,7 +30,7 @@ export const button = tv({
 type ButtonProps = {
   label: string
   type?: 'button' | 'submit'
-  handleClick: () => void
+  handleClick?: () => void
 } & ButtonVariants
 
 export const Button = ({

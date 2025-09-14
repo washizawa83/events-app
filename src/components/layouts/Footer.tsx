@@ -12,7 +12,11 @@ export const Footer = async () => {
       <div className="mx-auto flex w-11/12 items-center justify-between">
         <ul className="flex w-full items-center justify-around">
           <li>
-            <NavigationLink icon={<GoHome />} href="/search" iconSize="24px" />
+            <NavigationLink
+              icon={<GoHome />}
+              href="/event/search"
+              iconSize="24px"
+            />
           </li>
           <li className="relative">
             <div className="absolute -left-7 -top-10 flex h-14 w-14 items-center justify-center rounded-full bg-accent">

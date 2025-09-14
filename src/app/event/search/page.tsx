@@ -3,7 +3,7 @@ import { EventList } from '@/features/event/EventList'
 import { EventSearchBox } from '@/features/event/EventSearchBox'
 import { getEvents } from '@/services/event/event.service'
 
-const SearchPage = async () => {
+const EventSearchPage = async () => {
   const events = await getEvents()
 
   return (
@@ -16,4 +16,4 @@ const SearchPage = async () => {
   )
 }
 
-export default SearchPage
+export default EventSearchPage
