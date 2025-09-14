@@ -26,12 +26,7 @@ export const UserPageSummary = ({ events }: Props) => {
       </div>
       <div className="mb-5 md:w-2/5 md:px-4">
         <div className="mb-10 flex justify-end">
-          <LinkButton
-            label="イベントを追加"
-            href="/event/create"
-            size="s"
-            handleClick={() => {}}
-          />
+          <LinkButton label="イベントを追加" href="/event/create" size="s" />
         </div>
         <Calendar handleSelectedDay={() => {}} />
       </div>

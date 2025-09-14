@@ -22,7 +22,7 @@ export const EventListItem = ({ event }: Props) => {
         <h2 className="mb-2 text-xl">
           <Link href={`/event/detail/${event.id}`}>{event.title}</Link>
         </h2>
-        <p className="mb-2 line-clamp-2 text-gray-300">{event.description}</p>
+        <p className="mb-2 line-clamp-2 text-gray-200">{event.description}</p>
         <div className="mb-2 flex items-start">
           <span className="mr-3">
             <SlTag />

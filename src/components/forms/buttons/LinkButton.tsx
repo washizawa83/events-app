@@ -5,18 +5,12 @@ type Props = {
   label: string
   type?: 'button' | 'submit'
   href: string
-  handleClick: () => void
 } & ButtonVariants
 
-export const LinkButton = ({
-  label,
-  href,
-  handleClick,
-  ...variants
-}: Props) => {
+export const LinkButton = ({ label, href, ...variants }: Props) => {
   return (
-    <Link href={href} onClick={handleClick}>
-      <Button label={label} {...variants} handleClick={() => {}} />
+    <Link href={href}>
+      <Button label={label} {...variants} />
     </Link>
   )
 }

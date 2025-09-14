@@ -57,7 +57,6 @@ export const MobileCalendar = ({
                   label="イベントを追加"
                   href="/event/create"
                   size="s"
-                  handleClick={() => {}}
                 />
               </div>
               <div>

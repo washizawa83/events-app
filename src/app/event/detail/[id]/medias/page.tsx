@@ -1,9 +1,9 @@
 import { BasePageLayout } from '@/components/layouts/BasePageLayout'
-import { EventContents } from '@/features/event/event-detail/EventContents'
 import { EventDetailHeader } from '@/features/event/event-detail/EventDetailHeader'
-import { getEvent } from '@/services/event/event.service'
+import { EventMedia } from '@/features/event/event-detail/EventMedia'
+import { getEvent } from '@/services/event'
 
-export const EventDetailPage = async ({
+export const EventDetailMediasPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>
@@ -19,11 +19,11 @@ export const EventDetailPage = async ({
       <div className="h-pageHeight w-full overflow-y-auto p-4">
         <div className="overflow-hidden rounded-md">
           <EventDetailHeader event={event} />
-          <EventContents event={event} />
+          <EventMedia event={event} />
         </div>
       </div>
     </BasePageLayout>
   )
 }
 
-export default EventDetailPage
+export default EventDetailMediasPage

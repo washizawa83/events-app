@@ -12,7 +12,7 @@ export const Header = async () => {
       <div className="mx-auto flex w-11/12 items-center justify-between 2xl:w-[1280px]">
         <div>
           <h1 className="font-krona">
-            <Link href="/search">Events</Link>
+            <Link href="/event/search">Events</Link>
           </h1>
         </div>
         <ul className="flex items-center">
